@@ -34,10 +34,13 @@ export default function PortfolioPage() {
       {/* Side Navigation */}
       <SideNav sections={sections} scrollContainerRef={scrollContainerRef} />
 
-      {/* Scroll Container - Explicitly isolated to z-0 so it never covers up the TopBar links */}
+      {/* FIX: Dropped h-screen and scroll-snap-y traps. 
+        Changing this to h-auto and allowing natural document overflow ensures your 
+        expanding multi-row project grid can stretch down the page seamlessly.
+      */}
       <div
         ref={scrollContainerRef}
-        className="relative z-0 h-screen overflow-y-scroll scroll-snap-y scroll-smooth"
+        className="relative z-0 h-auto w-full overflow-y-visible scroll-smooth"
       >
         <LandingSection />
         <ProjectsSection />
