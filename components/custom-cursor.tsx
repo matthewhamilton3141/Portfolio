@@ -1,3 +1,4 @@
+// components/custom-cursor.tsx
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -75,18 +76,18 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Main dot - instant follow */}
+      {/* Main dot - z-[99999999] overrides all layout elements */}
       <div
         ref={dotRef}
-        className={`fixed -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full pointer-events-none z-[9999] transition-[opacity,transform] duration-150 ${
+        className={`fixed -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full pointer-events-none z-[99999999] transition-[opacity,transform] duration-150 ${
           isHovering ? "opacity-0 scale-0" : isVisible ? "opacity-100 scale-100" : "opacity-0"
         }`}
         style={{ backgroundColor: "var(--accent)", top: 0, left: 0 }}
       />
-      {/* Ring - appears on hover */}
+      {/* Ring - z-[99999999] keeps it perfectly aligned on top */}
       <div
         ref={ringRef}
-        className={`fixed -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border pointer-events-none z-[9999] transition-[opacity,transform] duration-150 ${
+        className={`fixed -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border pointer-events-none z-[99999999] transition-[opacity,transform] duration-150 ${
           isHovering && isVisible ? "opacity-100 scale-100" : "opacity-0 scale-75"
         }`}
         style={{ borderColor: "var(--accent)", top: 0, left: 0 }}

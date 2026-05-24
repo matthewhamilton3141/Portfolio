@@ -24,7 +24,7 @@ export function LandingSection() {
     bio: false,
   })
   
-  const fullName = "matthew hamilton"
+  const fullName = "MATTHEW HAMILTON"
   const chineseName = "陳文飛"
   const indexRef = useRef(0)
 
@@ -82,7 +82,7 @@ export function LandingSection() {
       {/* Left panel */}
       <div className="landing-left flex flex-col justify-center px-[8vw] py-[100px] md:px-[6vw] md:py-0 md:pl-[12vw] relative z-[1]">
         <p
-          className={`text-[15px] tracking-[0.22em] lowercase text-ink-muted mb-5 transition-all duration-800 ${
+          className={`text-[15px] tracking-[0.22em] text-ink-muted mb-5 transition-all duration-800 ${
             showElements.eyebrow ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
           }`}
         >
@@ -92,7 +92,7 @@ export function LandingSection() {
         {/* Interactive Name Container - Hover works during typewriter execution */}
         <div
           className="name-wrap interactive relative cursor-pointer mb-4 z-[10] pointer-events-auto"
-          aria-label="Matthew Hamilton (陳文飛)"
+          aria-label="MATTHEW HAMILTON (陳文飛)"
           onMouseEnter={() => setIsNameHovered(true)}
           onMouseLeave={() => setIsNameHovered(false)}
         >
@@ -100,7 +100,7 @@ export function LandingSection() {
             
             {/* English name */}
             <div
-              className={`name-en font-black text-[clamp(28px,3.8vw,52px)] leading-[0.95] tracking-[0.06em] text-ink transition-opacity duration-300 pointer-events-auto ${
+              className={`name-en font-black text-[clamp(32px,3.8vw,52px)] leading-[0.95] tracking-[0.06em] text-ink transition-opacity duration-300 pointer-events-auto ${
                 isNameHovered ? "opacity-0 invisible" : "opacity-100 visible"
               }`}
               style={{ 
@@ -226,15 +226,14 @@ export function LandingSection() {
       </div>
 
       {/* Full-width Grid Overlay Container holding both interactive scroll navigation hints */}
-      <div className="absolute bottom-8 left-0 right-0 w-full grid grid-cols-1 md:grid-cols-2 px-[8vw] md:px-0 pointer-events-none z-20">
+      {/* Added 'hidden md:grid' to completely remove scroll hints from mobile viewports */}
+      <div className="absolute bottom-8 left-0 right-0 w-full hidden md:grid grid-cols-1 md:grid-cols-2 px-[8vw] md:px-0 pointer-events-none z-20">
         
         {/* PROJECTS TARGET LINK */}
         <div className="flex md:justify-start md:pl-[12vw] justify-center">
           <button
             onClick={() => scrollToSection("projects")}
-            className={`flex flex-col items-center gap-2 transition-all duration-1000 pointer-events-auto cursor-none bg-transparent border-none p-0 group ${
-              showElements.projectsHint ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
+            className="flex flex-col items-center gap-2 pointer-events-auto cursor-none bg-transparent border-none p-0 group"
           >
             <span className="text-[10px] tracking-[0.18em] lowercase text-ink-muted group-hover:text-ink transition-colors duration-200">
               Projects
@@ -247,9 +246,7 @@ export function LandingSection() {
         <div className="flex md:justify-end md:pr-[8vw] justify-center mt-6 md:mt-0">
           <button
             onClick={() => scrollToSection("contact")}
-            className={`flex flex-col items-center gap-2 transition-all duration-1000 pointer-events-auto cursor-none bg-transparent border-none p-0 group ${
-              showElements.contactHint ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
+            className="flex flex-col items-center gap-2 pointer-events-auto cursor-none bg-transparent border-none p-0 group"
           >
             <span className="text-[10px] tracking-[0.18em] lowercase text-ink-muted group-hover:text-ink transition-colors duration-200">
               Contact

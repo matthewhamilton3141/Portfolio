@@ -1,3 +1,4 @@
+// app/page.tsx
 "use client"
 
 import { useRef } from "react"
@@ -8,8 +9,8 @@ import { LandingSection } from "@/components/landing-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
+import { NotchMediaPlayer } from "@/components/notch-media-player"
 
-// Dots array updated to only hold your 3 remaining sections!
 const sections = [
   { id: "landing", label: "Home" },
   { id: "projects", label: "Projects" },
@@ -20,20 +21,23 @@ export default function PortfolioPage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="cursor-none">
+    <div className="cursor-none relative min-h-screen bg-background">
       {/* Custom Cursor */}
       <CustomCursor />
 
-      {/* Top Bar */}
+      {/* Top Bar - High stacking index */}
       <TopBar />
+
+      {/* Notch Media Player - High stacking index */}
+      <NotchMediaPlayer />
 
       {/* Side Navigation */}
       <SideNav sections={sections} scrollContainerRef={scrollContainerRef} />
 
-      {/* Scroll Container */}
+      {/* Scroll Container - Explicitly isolated to z-0 so it never covers up the TopBar links */}
       <div
         ref={scrollContainerRef}
-        className="h-screen overflow-y-scroll scroll-snap-y scroll-smooth"
+        className="relative z-0 h-screen overflow-y-scroll scroll-snap-y scroll-smooth"
       >
         <LandingSection />
         <ProjectsSection />
@@ -43,4 +47,3 @@ export default function PortfolioPage() {
     </div>
   )
 }
-

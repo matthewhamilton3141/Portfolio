@@ -1,3 +1,4 @@
+// components/theme-toggle.tsx
 "use client"
 
 import { useEffect, useState } from "react"
@@ -30,7 +31,7 @@ export function ThemeToggle() {
   if (!mounted) {
     return (
       <button
-        className="topbar-icon w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center cursor-none text-ink-soft transition-all duration-250 hover:bg-blush hover:border-dusty-rose hover:text-accent hover:scale-[1.08]"
+        className="topbar-icon w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none"
         aria-label="Toggle dark mode"
         title="Toggle theme"
       >
@@ -44,7 +45,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="topbar-icon w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center cursor-none text-ink-soft transition-all duration-250 hover:bg-blush hover:border-dusty-rose hover:text-accent hover:scale-[1.08]"
+      className="topbar-icon w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none"
       aria-label="Toggle dark mode"
       title="Toggle theme"
     >
