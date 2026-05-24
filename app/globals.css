@@ -1,0 +1,358 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Portfolio theme tokens */
+  --cream: #EEEAE0;
+  --warm-white: #F7F4EE;
+  --ink: #1A1714;
+  --ink-soft: #4A433C;
+  --ink-muted: #8A8078;
+  --blush: #D4C4B4;
+  --sage: #A8B89C;
+  --dusty-rose: #B8907C;
+  --lavender: #9E9BB0;
+  --accent: #5C3D2E;
+  --accent-warm: #A0522D;
+  --surface: #F7F4EE;
+  --surface-alt: #EEEAE0;
+  --border: #D4C4B4;
+  --selection-bg: rgba(160,82,45,0.18);
+  --selection-color: #3A1F10;
+  --signature-filter: none;
+
+  /* Shadcn compatibility */
+  --background: var(--warm-white);
+  --foreground: var(--ink);
+  --card: var(--cream);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--accent);
+  --primary-foreground: var(--warm-white);
+  --secondary: var(--blush);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-alt);
+  --muted-foreground: var(--ink-muted);
+  --accent-color: var(--accent);
+  --accent-foreground: var(--warm-white);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --input: var(--border);
+  --ring: var(--accent);
+  --radius: 0.25rem;
+}
+
+.dark {
+  --cream: #1C1814;
+  --warm-white: #141210;
+  --ink: #F0EBE3;
+  --ink-soft: #C0B8AE;
+  --ink-muted: #7A7268;
+  --blush: #352A22;
+  --sage: #252E22;
+  --dusty-rose: #6A4030;
+  --lavender: #2A2830;
+  --accent: #D4A882;
+  --accent-warm: #C8784A;
+  --surface: #141210;
+  --surface-alt: #1C1814;
+  --border: #352A22;
+  --selection-bg: rgba(212,168,130,0.25);
+  --selection-color: #F0EBE3;
+  --signature-filter: invert(1) brightness(0.85);
+
+  /* Shadcn compatibility */
+  --background: var(--warm-white);
+  --foreground: var(--ink);
+  --card: var(--cream);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--accent);
+  --primary-foreground: var(--warm-white);
+  --secondary: var(--blush);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface-alt);
+  --muted-foreground: var(--ink-muted);
+  --accent-color: var(--accent);
+  --accent-foreground: var(--warm-white);
+  --input: var(--border);
+  --ring: var(--accent);
+}
+
+@theme inline {
+  --font-sans: 'DM Sans', 'Geist', sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-chinese: 'Noto Serif SC', serif;
+  --font-mono: 'Geist Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent-color);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Custom portfolio colors */
+  --color-cream: var(--cream);
+  --color-warm-white: var(--warm-white);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-blush: var(--blush);
+  --color-sage: var(--sage);
+  --color-dusty-rose: var(--dusty-rose);
+  --color-lavender: var(--lavender);
+  --color-accent-warm: var(--accent-warm);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+}
+
+@layer base {
+  * {
+    @apply border-border/40 outline-ring/50;
+  }
+  body {
+    @apply bg-warm-white text-ink;
+  }
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-color);
+  }
+}
+
+/* Custom cursor styles */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  .cursor-none,
+  .cursor-none * {
+    cursor: auto !important;
+  }
+}
+
+/* Animations */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes overlayFade {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@keyframes drawSig {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes blobDrift {
+  0% { transform: translate(0,0) scale(1); }
+  100% { transform: translate(20px,30px) scale(1.05); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.animate-blink {
+  animation: blink 0.8s step-end infinite;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s forwards;
+}
+
+.animate-overlay-fade {
+  animation: overlayFade 0.8s 0.3s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+.animate-draw-sig {
+  animation: drawSig 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+.animate-blob-drift {
+  animation: blobDrift 18s ease-in-out infinite alternate;
+}
+
+.animate-blob-drift-reverse {
+  animation: blobDrift 22s ease-in-out infinite alternate-reverse;
+}
+
+.animate-scroll-pulse {
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* Scroll snap */
+.scroll-snap-y {
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-start {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Signature path animation */
+.sig-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+
+ellipse.sig-path {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+}
+
+.sig-path.animating {
+  animation: drawSig 0.5s ease-out forwards;
+}
+
+@keyframes drawSig {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ==========================================================================
+   PRESET THEMES SYSTEM (Dynamic Variable Overrides)
+   ========================================================================== */
+
+/* 1. Initial Simple Black and White (Stark Mono) */
+:root,
+:root.theme-stark-mono {
+  --warm-white: #FFFFFF;
+  --cream: #F5F5F5;
+  --ink: #000000;
+  --ink-soft: #333333;
+  --ink-muted: #666666;
+  --accent: #000000;
+  --accent-warm: #333333;
+  --border: #E5E5E5;
+  --blush: #EAEAEA;
+  --surface: #FFFFFF;
+  --surface-alt: #F5F5F5;
+}
+.dark,
+.dark.theme-stark-mono {
+  --warm-white: #0A0A0A;
+  --cream: #141414;
+  --ink: #FFFFFF;
+  --ink-soft: #CCCCCC;
+  --ink-muted: #888888;
+  --accent: #FFFFFF;
+  --accent-warm: #CCCCCC;
+  --border: #262626;
+  --blush: #1F1F1F;
+  --surface: #0A0A0A;
+  --surface-alt: #141414;
+}
+
+/* 2. Warm Editorial Presets */
+:root.theme-warm-editorial {
+  --warm-white: #FCFAF7;
+  --cream: #F5EBD9;
+  --ink: #2B2927;
+  --ink-soft: #54504C;
+  --ink-muted: #8C857E;
+  --accent: #A36A58;
+  --accent-warm: #A0522D;
+  --border: #E8DEC9;
+  --blush: #D4C4B4;
+}
+.dark.theme-warm-editorial {
+  --warm-white: #121110;
+  --cream: #1C1A18;
+  --ink: #F2EFEA;
+  --ink-soft: #C2BBB2;
+  --ink-muted: #736E68;
+  --accent: #E0A08D;
+  --accent-warm: #C8784A;
+  --border: #2B2825;
+  --blush: #352A22;
+}
+
+/* 3. Cyber Nordic Presets */
+:root.theme-cyber-nordic {
+  --warm-white: #ECEFF4;
+  --cream: #E5E9F0;
+  --ink: #2E3440;
+  --ink-soft: #4C566A;
+  --ink-muted: #96A0B2;
+  --accent: #4C768F;
+  --accent-warm: #434C5E;
+  --border: #D8DEE9;
+  --blush: #D8DEE9;
+}
+.dark.theme-cyber-nordic {
+  --warm-white: #1A1C23;
+  --cream: #222530;
+  --ink: #E5E9F0;
+  --ink-soft: #A3BE8C;
+  --ink-muted: #4C566A;
+  --accent: #88C0D0;
+  --accent-warm: #81A1C1;
+  --border: #2E3440;
+  --blush: #2E3440;
+}
+
+/* 4. Midnight Mint Presets */
+:root.theme-midnight-mint {
+  --warm-white: #F4F7F5;
+  --cream: #E6EDE8;
+  --ink: #1C2421;
+  --ink-soft: #3D4F4A;
+  --ink-muted: #7B8F8A;
+  --accent: #2D6A4F;
+  --accent-warm: #1B4332;
+  --border: #D2DFD7;
+  --blush: #D2DFD7;
+}
+.dark.theme-midnight-mint {
+  --warm-white: #0B0F0E;
+  --cream: #121A17;
+  --ink: #E8F5E9;
+  --ink-soft: #A2C4B4;
+  --ink-muted: #405149;
+  --accent: #52B788;
+  --accent-warm: #74C69D;
+  --border: #1B2924;
+  --blush: #1B2924;
+}
