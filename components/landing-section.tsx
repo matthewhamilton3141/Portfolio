@@ -164,8 +164,8 @@ export function LandingSection() {
       {/* Right panel */}
       <div className="landing-right relative flex flex-col justify-center px-[8vw] py-10 md:px-[5vw] md:py-[80px] md:pr-[8vw] bg-cream transition-colors duration-500 overflow-y-auto overflow-x-hidden">
         {/* Painterly blobs */}
-        <div className="absolute w-[420px] h-[420px] rounded-[60%_40%_70%_30%/50%_60%_40%_50%] bg-[radial-gradient(ellipse,rgba(232,213,200,0.5)_0%,transparent_70%)] -top-[60px] -right-[40px] pointer-events-none animate-blob-drift" />
-        <div className="absolute w-[300px] h-[300px] rounded-[40%_60%_30%_70%/60%_40%_60%_40%] bg-[radial-gradient(ellipse,rgba(196,190,204,0.4)_0%,transparent_70%)] bottom-20 left-[10%] pointer-events-none animate-blob-drift-reverse" />
+        <div className="absolute w-[420px] h-[420px] rounded-[60%_40%_70%_30%/50%_60%_40%_50%] bg-[radial-gradient(ellipse,rgba(255, 255, 255, 1)_0%,transparent_70%)] -top-[60px] -right-[40px] pointer-events-none animate-blob-drift" />
+        <div className="absolute w-[300px] h-[300px] rounded-[40%_60%_30%_70%/60%_40%_60%_40%] bg-[radial-gradient(ellipse,rgba(255, 255, 255, 0.4)_0%,transparent_70%)] bottom-20 left-[10%] pointer-events-none animate-blob-drift-reverse" />
 
         {/* Container for Photo + Interactive Logo Sandbox */}
         <div className="flex flex-row items-stretch gap-6 mb-6 w-full max-w-[550px]">
