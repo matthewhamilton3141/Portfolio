@@ -201,7 +201,7 @@ export function LandingSection() {
           <p className="text-[13px] leading-[1.85] text-ink-soft mb-3 max-w-[360px]">
             incoming{" "}
             <a 
-              href="https://uwaterloo.ca/systems-design-engineering/"
+              href="https://uwaterloo.ca/future-students/programs/systems-design-engineering"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-1.5 py-0.5 rounded bg-accent/5 text-accent font-semibold border border-accent/10 transition-all duration-200 hover:bg-accent/15 hover:border-accent/30 cursor-none"
