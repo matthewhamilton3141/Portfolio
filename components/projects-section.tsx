@@ -47,6 +47,9 @@ export function ProjectsSection() {
   const [viewMode, setViewMode] = useState<ViewMode>("carousel")
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredListIndex, setHoveredListIndex] = useState<number | null>(null)
+  
+  // Track viewport-relative mouse mouse coordinates directly via state
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % projects.length)
@@ -54,6 +57,11 @@ export function ProjectsSection() {
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length)
+  }
+
+  // Updates the mouse positions relative to the screen viewport bounds
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY })
   }
 
   return (
@@ -146,7 +154,10 @@ export function ProjectsSection() {
 
       {/* --- RENDER 3: LIST VIEW (Editorial Hover Reveal) --- */}
       {viewMode === "list" && (
-        <div className="w-full max-w-[1100px] flex flex-col relative animate-fade-in border-t border-border/40">
+        <div 
+          onMouseMove={handleMouseMove}
+          className="w-full max-w-[1100px] flex flex-col relative animate-fade-in border-t border-border/40"
+        >
           {projects.map((project, idx) => (
             <div
               key={project.title}
@@ -180,12 +191,14 @@ export function ProjectsSection() {
 
           {/* Floating Live-Hover Preview Window */}
           {hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
-            <div className="fixed pointer-events-none hidden lg:block z-50 w-[240px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl animate-fade-in"
-                 style={{
-                   left: "calc(var(--cursor-x, 0px) + 20px)",
-                   top: "calc(var(--cursor-y, 0px) - 80px)",
-                   transform: "translate3d(0, 0, 0)"
-                 }}>
+            <div 
+              className="fixed pointer-events-none hidden lg:block z-50 w-[240px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl animate-fade-in"
+              style={{
+                left: `${mousePos.x + 20}px`,
+                top: `${mousePos.y - 80}px`,
+                transform: "translate3d(0, 0, 0)"
+              }}
+            >
               <ProjectThumbnail project={projects[hoveredListIndex]} />
             </div>
           )}
