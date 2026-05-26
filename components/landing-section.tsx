@@ -31,7 +31,7 @@ export function LandingSection() {
   // Typewriter effect
   useEffect(() => {
     const typeSpeed = 80
-    const startDelay = 200
+    const startDelay = 300
 
     const typeNext = () => {
       if (indexRef.current <= fullName.length) {
@@ -82,7 +82,7 @@ export function LandingSection() {
       {/* Left panel */}
       <div className="landing-left flex flex-col justify-center px-[8vw] py-[100px] md:px-[6vw] md:py-0 md:pl-[12vw] relative z-[1]">
         
-        {/* INNER WRAPPER: Sized up maximum boundary box and expanded layout spacing gap */}
+        {/* INNER WRAPPER */}
         <div className="flex flex-col max-w-[520px] gap-y-3 md:gap-y-5">
           
           {/* Eyebrow */}
@@ -96,17 +96,21 @@ export function LandingSection() {
 
           {/* Interactive Name Container */}
           <div
-            className="name-wrap interactive relative cursor-pointer z-[10] pointer-events-auto w-full"
+            className={`name-wrap relative z-[10] w-full ${typingDone ? "interactive cursor-pointer pointer-events-auto" : "pointer-events-none"}`}
             aria-label="MATTHEW HAMILTON (陳文飛)"
-            onMouseEnter={() => setIsNameHovered(true)}
-            onMouseLeave={() => setIsNameHovered(false)}
+            onMouseEnter={() => {
+              if (typingDone) setIsNameHovered(true)
+            }}
+            onMouseLeave={() => {
+              if (typingDone) setIsNameHovered(false)
+            }}
           >
-            <div className="relative w-full block h-auto pointer-events-auto">
+            <div className="relative w-full block h-auto">
               
-              {/* English name */}
+              {/* English name - Scaled down slightly to stay tight and balanced */}
               <div
-                className={`name-en font-black text-[clamp(46px,5.8vw,82px)] leading-[0.85] tracking-[0.06em] text-foreground transition-opacity duration-300 pointer-events-auto ${
-                  isNameHovered ? "opacity-0 invisible" : "opacity-100 visible"
+                className={`name-en font-black text-[clamp(42px,5vw,72px)] leading-[0.85] tracking-[0.06em] text-foreground transition-opacity duration-300 ${
+                  isNameHovered && typingDone ? "opacity-0 invisible" : "opacity-100 visible"
                 }`}
                 style={{ 
                   fontFamily: "var(--font-geist-sans), sans-serif", 
@@ -127,12 +131,12 @@ export function LandingSection() {
 
               {/* Chinese name */}
               <span
-                className={`name-zh absolute top-0 left-0 block font-bold text-accent-warm whitespace-nowrap transition-opacity duration-300 pointer-events-auto ${
-                  isNameHovered ? "opacity-100 visible" : "opacity-0 invisible"
+                className={`name-zh absolute top-0 left-0 block font-bold text-accent-warm whitespace-nowrap transition-opacity duration-300 ${
+                  isNameHovered && typingDone ? "opacity-100 visible" : "opacity-0 invisible"
                 }`}
                 style={{ 
                   fontFamily: "'Noto Serif SC', serif",
-                  fontSize: "clamp(72px, 9vw, 125px)",    
+                  fontSize: "clamp(64px, 8vw, 110px)",    
                   lineHeight: "1.0",                     
                   transform: "scaleX(1.3)",              
                   transformOrigin: "left center",
@@ -175,12 +179,12 @@ export function LandingSection() {
         
       </div>
 
-      {/* Right panel - Dynamic width container scales expanded */}
+      {/* Right panel */}
       <div className="landing-right relative flex flex-col justify-center px-[8vw] py-10 md:px-[5vw] md:py-[80px] md:pr-[8vw] bg-cream transition-colors duration-500 overflow-y-auto overflow-x-hidden">
         
-        {/* Container for Photo + Interactive Logo Sandbox - Bumped max-width to 640px and gap to 8 */}
+        {/* Container for Photo + Interactive Logo Sandbox */}
         <div className="flex flex-row items-stretch gap-8 mb-8 w-full max-w-[640px]">
-          {/* Live Photo component - Sized up from 180px/200px to 200px/240px */}
+          {/* Live Photo component */}
           <div
             className={`w-[200px] md:w-[240px] aspect-[3/4] rounded-sm relative overflow-hidden flex-shrink-0 transition-all duration-800 ${
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
@@ -194,7 +198,7 @@ export function LandingSection() {
             />
           </div>
 
-          {/* Interactive Physics Canvas Sandbox Area - Sized up to 200px/240px */}
+          {/* Interactive Physics Canvas Sandbox Area */}
           <div 
             className={`w-[200px] md:w-[240px] max-w-[240px] aspect-[3/4] rounded-sm border border-dashed border-border/60 bg-surface/20 relative overflow-hidden transition-all duration-800 delay-300 hidden sm:block ${
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
@@ -204,7 +208,7 @@ export function LandingSection() {
           </div>
         </div>
 
-        {/* Bio Text Wrapper - Sized typography to 15px and maximized layout bounds to 460px */}
+        {/* Bio Text Wrapper */}
         <div
           className={`about-bio transition-all duration-800 max-w-[460px] ${
             showElements.bio ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"

@@ -41,10 +41,10 @@ const projects = [
   },
 ]
 
-type ViewMode =  "carousel" | "grid" | "list"
+type ViewMode =  "list" | "grid" | "carousel"
 
 export function ProjectsSection() {
-  const [viewMode, setViewMode] = useState<ViewMode>("carousel")
+  const [viewMode, setViewMode] = useState<ViewMode>("list")
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredListIndex, setHoveredListIndex] = useState<number | null>(null)
   
@@ -79,7 +79,7 @@ export function ProjectsSection() {
 
         {/* Dynamic Layout Controller Switch */}
         <div className="flex bg-muted/40 p-1 rounded-full border border-border/40 backdrop-blur-sm self-stretch sm:self-auto justify-between">
-          {(["carousel", "grid",  "list"] as ViewMode[]).map((mode) => (
+          {(["list", "grid", "carousel" ] as ViewMode[]).map((mode) => (
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
@@ -96,7 +96,7 @@ export function ProjectsSection() {
       </div>
       
 
-      {/* --- RENDER 1: CAROUSEL VIEW --- */}
+      {/* --- RENDER 3: CAROUSEL VIEW --- */}
       {viewMode === "carousel" && (
         <div className="w-full flex flex-col items-center animate-fade-in">
           <div className="relative w-full max-w-[1100px] h-[480px] flex items-center justify-center" style={{ perspective: "1200px" }}>
@@ -152,7 +152,7 @@ export function ProjectsSection() {
       )}
       
 
-      {/* --- RENDER 3: LIST VIEW (Editorial Hover Reveal) --- */}
+      {/* --- RENDER 1: LIST VIEW (Editorial Hover Reveal) --- */}
       {viewMode === "list" && (
         <div 
           onMouseMove={handleMouseMove}
