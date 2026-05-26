@@ -39,6 +39,22 @@ const TRACKS: Track[] = [
     progressColor: "#E2E8F0"
   },
   {
+    title: "seigfried",
+    artist: "frank ocean",
+    src: "/audio/seigfried.mp3",
+    coverUrl: "/images/blond.jpg",
+    waveColor: "linear-gradient(to top, #22C55E, #e4e4e4ff)",
+    progressColor: "#E2E8F0"
+  },
+  {
+    title: "rearrange my world",
+    artist: "daniel caesar (ft. rex orange county)",
+    src: "/audio/rearrangemyworld.mp3",
+    coverUrl: "/images/rearrange.jpeg",
+    waveColor: "#b7b7b7ff", 
+    progressColor: "#E2E8F0"
+  },
+  {
     title: "ochos rios",
     artist: "daniel caesar",
     src: "/audio/ochosrios.mp3",
@@ -64,13 +80,51 @@ const TRACKS: Track[] = [
   },
   {
     title: "cyanide",
-    artist: "daniel caeesar",
+    artist: "daniel caesar",
     src: "/audio/cyanide.mp3",
     coverUrl: "/images/casestudy.jpeg",
     waveColor: "linear-gradient(to top, #7aadffb9, #b7b7b7ff)",
     progressColor: "#E2E8F0"
   }
 ]
+
+
+// REUSABLE CONDITIONAL MARQUEE COMPONENT
+function ConditionalMarquee({ text, className }: { text: string; className: string }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLSpanElement>(null)
+  const [isOverflowing, setIsOverflowing] = useState(false)
+
+  useEffect(() => {
+    const container = containerRef.current
+    const textEl = textRef.current
+    if (!container || !textEl) return
+
+    const checkOverflow = () => {
+      setIsOverflowing(textEl.scrollWidth > container.offsetWidth)
+    }
+
+    checkOverflow()
+    // Re-check on window layout resizing
+    window.addEventListener("resize", checkOverflow)
+    return () => window.removeEventListener("resize", checkOverflow)
+  }, [text])
+
+  return (
+    <div ref={containerRef} className="w-full overflow-hidden relative whitespace-nowrap">
+      <div className={`${isOverflowing ? "animate-marquee flex gap-8 w-max" : ""}`}>
+        <span ref={textRef} className={className}>
+          {text}
+        </span>
+        {isOverflowing && (
+          <span className={className} aria-hidden="true">
+            {text}
+          </span>
+        )}
+      </div>
+    </div>
+  )
+}
 
 export function NotchMediaPlayer() {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -92,18 +146,16 @@ export function NotchMediaPlayer() {
   const BAR_COUNT = 9
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0
 
-  // Reset function for mobile idle timing
   const resetInactivityTimer = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
     
     if (typeof window !== "undefined" && window.innerWidth < 768 && isExpanded) {
       timeoutRef.current = setTimeout(() => {
         setIsExpanded(false)
-      }, 2500) // 5 seconds of total layout inactivity -> auto close
+      }, 2500)
     }
   }
 
-  // Manage custom event communication, tracking window loops, and touch inputs
   useEffect(() => {
     const event = new CustomEvent("notchStateChange", { detail: { isExpanded } })
     window.dispatchEvent(event)
@@ -282,8 +334,6 @@ export function NotchMediaPlayer() {
   }
 
   return (
-    /* OUTER WRAPPER FIXED: Uses w-auto and left-1/2 -translate-x-1/2 instead of left-0 right-0. 
-       This completely prevents the wrapper from blocking the desktop cursor layout bounds on either side. */
     <div className="w-auto flex justify-center fixed top-3 left-1/2 -translate-x-1/2 z-[999999] pointer-events-auto">
       <div
         ref={playerRef}
@@ -295,7 +345,7 @@ export function NotchMediaPlayer() {
         className={`
           bg-black text-white shadow-[0_24px_50px_rgba(0,0,0,0.6)] border border-white/10
           flex flex-col justify-between transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]
-          overflow-hidden select-none
+          overflow-hidden select-none relative
           ${isExpanded 
             ? "w-[91vw] sm:w-[385px] h-[105px] rounded-[28px] p-4 cursor-default" 
             : isPlaying 
@@ -309,7 +359,7 @@ export function NotchMediaPlayer() {
           <div className="flex items-center justify-between w-full h-full my-auto transition-opacity duration-200">
             {isPlaying ? (
               <>
-                <div className="flex items-center gap-2 overflow-hidden max-w-[120px]">
+                <div className="flex items-center gap-2 overflow-hidden max-w-[125px]">
                   <div className="w-5 h-5 rounded-[5px] overflow-hidden flex-shrink-0 border border-white/5">
                     {currentTrack.coverUrl ? (
                       <img src={currentTrack.coverUrl} alt="" className="w-full h-full object-cover" />
@@ -317,9 +367,10 @@ export function NotchMediaPlayer() {
                       <Music className="w-3 h-3 text-neutral-400 m-auto" />
                     )}
                   </div>
-                  <span className="text-[11px] font-semibold tracking-tight truncate text-white/90">
-                    {currentTrack.title}
-                  </span>
+                  <ConditionalMarquee 
+                    text={currentTrack.title} 
+                    className="text-[11px] font-semibold tracking-tight text-white/90" 
+                  />
                 </div>
 
                 <div className="flex items-center gap-[2px] h-3.5 px-1 origin-bottom">
@@ -350,23 +401,37 @@ export function NotchMediaPlayer() {
           </div>
         ) : (
           /* EXPANDED SYSTEM ISLAND DECK */
-          <div className="flex flex-col w-full h-full justify-between animate-[fadeIn_0.2s_ease-out]">
+          <div className="flex flex-col w-full h-full justify-between animate-[fadeIn_0.2s_ease-out] relative z-10">
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center gap-3 min-w-0 max-w-[55%]">
-                <div className="w-11 h-11 rounded-[10px] bg-neutral-900 border border-white/10 overflow-hidden flex-shrink-0 shadow-md">
-                  {currentTrack.coverUrl ? (
-                    <img src={currentTrack.coverUrl} alt="" className="w-full h-full object-cover" />
-                  ) : (
-                    <Music className="w-5 h-5 text-neutral-400 m-auto" />
-                  )}
+                <div className="relative w-11 h-11 flex-shrink-0">
+                  {/* DYNAMIC AMBIENT BACKDROP GLOW */}
+                  <div 
+                    className="absolute inset-0 rounded-[10px] opacity-70 blur-xl scale-125 transition-all duration-500 pointer-events-none mix-blend-screen animate-[pulse_3s_infinite]"
+                    style={{
+                      background: currentTrack.waveColor.includes("linear-gradient")
+                        ? currentTrack.waveColor
+                        : `radial-gradient(circle, ${currentTrack.waveColor} 0%, transparent 70%)`
+                    }}
+                  />
+                  <div className="relative w-full h-full rounded-[10px] bg-neutral-900 border border-white/10 overflow-hidden shadow-md z-10">
+                    {currentTrack.coverUrl ? (
+                      <img src={currentTrack.coverUrl} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <Music className="w-5 h-5 text-neutral-400 m-auto" />
+                    )}
+                  </div>
                 </div>
-                <div className="flex flex-col min-w-0 leading-tight">
-                  <span className="text-[13px] font-bold text-white tracking-tight truncate">
-                    {currentTrack.title}
-                  </span>
-                  <span className="text-[11px] text-neutral-400 font-medium truncate mt-0.5">
-                    {currentTrack.artist}
-                  </span>
+                
+                <div className="flex flex-col min-w-0 flex-1 leading-tight">
+                  <ConditionalMarquee 
+                    text={currentTrack.title} 
+                    className="text-[13px] font-bold text-white tracking-tight" 
+                  />
+                  <ConditionalMarquee 
+                    text={currentTrack.artist} 
+                    className="text-[11px] text-neutral-400 font-medium mt-0.5" 
+                  />
                 </div>
               </div>
 

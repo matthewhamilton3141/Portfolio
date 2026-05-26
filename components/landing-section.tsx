@@ -334,7 +334,7 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
       img.src = src
       
       const angle = Math.random() * Math.PI * 2
-      const speed = 0.8 + Math.random() * 0.6
+      const speed = 1 + Math.random() * 0.6
 
       const colIndex = idx % cols
       const rowIndex = Math.floor(idx / cols)

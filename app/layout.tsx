@@ -17,17 +17,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* FIX: Set the fallback body styles to dark utilities to ensure an instant seamless dark paint */}
-      <body className="bg-zinc-950 text-zinc-50 transition-colors duration-500 antialiased selection:bg-accent-warm/20 selection:text-white">
+      <body 
+        className="bg-zinc-950 text-zinc-50 transition-colors duration-500 antialiased selection:bg-accent-warm/20 selection:text-white"
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
           disableTransitionOnChange
         >
-          {/* Global UI Components layout canvas */}
+          {/* Main Page Layout Wrapper */}
           {children}
           
+          {/* Global UI Components */}
           <CustomCursor />
           <ThemeMenu />
         </ThemeProvider>
