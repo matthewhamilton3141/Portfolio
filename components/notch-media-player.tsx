@@ -19,15 +19,15 @@ const TRACKS: Track[] = [
     artist: "daniel caesar",
     src: "/audio/whoknows.mp3",
     coverUrl: "/images/sonofspergy.jpg", 
-    waveColor: "#800020", 
-    progressColor: "#800020"
+    waveColor: "linear-gradient(to top, #800020,  #c60032ff )", 
+    progressColor: "#E2E8F0"
   },
   {
     title: "japanese denim",
     artist: "daniel caesar",
     src: "/audio/japanesedenim.mp3",
     coverUrl: "/images/japanesedenim.jpg", 
-    waveColor: "#FFFFFF", 
+    waveColor: "linear-gradient(to top, #e2e2e2ff,  #a5a5a5ff )",
     progressColor: "#E2E8F0" 
   },
   {
@@ -35,8 +35,8 @@ const TRACKS: Track[] = [
     artist: "frank ocean",
     src: "/audio/nights.mp3",
     coverUrl: "/images/blond.jpg",
-    waveColor: "#22C55E", 
-    progressColor: "#22C55E"
+    waveColor: "linear-gradient(to top, #22C55E, #e4e4e4ff)",
+    progressColor: "#E2E8F0"
   },
   {
     title: "ochos rios",
@@ -44,7 +44,7 @@ const TRACKS: Track[] = [
     src: "/audio/ochosrios.mp3",
     coverUrl: "/images/neverenough.jpg",
     waveColor: "#4169E1", 
-    progressColor: "#4169E1"
+    progressColor: "#E2E8F0"
   },
   {
     title: "clarity",
@@ -52,7 +52,7 @@ const TRACKS: Track[] = [
     src: "/audio/clarity.mp3",
     coverUrl: "/images/clarity.jpg",
     waveColor: "linear-gradient(to top, #3B82F6, #22C55E)", 
-    progressColor: "#3B82F6"
+    progressColor: "#E2E8F0"
   },
   {
     title: "whiplash",
@@ -60,6 +60,14 @@ const TRACKS: Track[] = [
     src: "/audio/whiplash.mp3",
     coverUrl: "/images/whiplash.jpg",
     waveColor: "#FFFFFF", 
+    progressColor: "#E2E8F0"
+  },
+  {
+    title: "cyanide",
+    artist: "daniel caeesar",
+    src: "/audio/cyanide.mp3",
+    coverUrl: "/images/casestudy.jpeg",
+    waveColor: "linear-gradient(to top, #7aadffb9, #b7b7b7ff)",
     progressColor: "#E2E8F0"
   }
 ]

@@ -213,7 +213,7 @@ export function LandingSection() {
             {"originally from toronto, now based in waterloo for fall '26 to winter '27. i enjoy exploring nature, video games, and trying new things."}
           </p>
           <div className="flex flex-wrap gap-1.5 mt-4">
-            {["Python", "AI/ML", "JavaScript", "CAD Software"].map((tag) => (
+            {["Python", "AI/ML", "JavaScript", "React"].map((tag) => (
               <span
                 key={tag}
                 className="text-[10px] tracking-[0.1em] lowercase py-1.5 px-3 border border-border rounded-full text-ink-soft bg-surface transition-colors duration-300"
