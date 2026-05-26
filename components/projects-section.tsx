@@ -188,7 +188,7 @@ export function ProjectsSection() {
             </div>
           ))}
 
-          {/* Floating Live-Hover Preview Window */}
+          {/* Floating Live-Hover Preview Window, gonna add back when i actually make videos */} 
           {/*hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
             <div 
               className="fixed pointer-events-none hidden lg:block z-50 w-[240px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl animate-fade-in"
