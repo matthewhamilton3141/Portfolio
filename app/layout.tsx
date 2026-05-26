@@ -6,8 +6,34 @@ import { CustomCursor } from "@/components/custom-cursor"
 import { ThemeMenu } from "@/components/theme-menu"
 
 export const metadata: Metadata = {
-  title: "matthewh",
+  title: "matthew h",
   description: "swe, systems design engineering @ uwaterloo",
+  
+  // Link share card preview configuration
+  openGraph: {
+    title: "matthew h",
+    description: "swe, systems design engineering @ uwaterloo",
+    url: "https://matthewhamilton.vercel.app",
+    siteName: "matthew h",
+    type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://matthewhamilton.vercel.app/images/icon.png", // Make sure to save a screenshot as og-preview.png in public/images/
+        width: 1200,
+        height: 630,
+        alt: "swe, systems design engineering @ uwaterloo",
+      },
+    ],
+  },
+  
+  // Custom display configurations for X/Twitter
+  twitter: {
+    card: "summary_large_image",
+    title: "matthew h",
+    description: "swe, systems design engineering @ uwaterloo",
+    images: ["https://matthewhamilton.vercel.app/images/icon.png"],
+  },
 }
 
 export default function RootLayout({

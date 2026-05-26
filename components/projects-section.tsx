@@ -11,7 +11,7 @@ const projects = [
     title: "portfolio",
     description: "An interactive, high-performance web experience featuring a layout-synchronized audio visualizer and custom stacked event architectures.",
     link: "https://github.com/matthewhamilton3141/portfolio", 
-    liveUrl: "https://matthewh.dev", 
+    liveUrl: "https://matthewhamilton.vercel.app/", 
     useSignatureThumbnail: true,
     videoSrc: "/videos/portfolio-preview.mp4",        
     webmVideoSrc: "/videos/portfolio-preview.webm",   
