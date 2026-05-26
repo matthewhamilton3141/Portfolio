@@ -11,7 +11,6 @@ const projects = [
     title: "portfolio",
     description: "An interactive, high-performance web experience featuring a layout-synchronized audio visualizer and custom stacked event architectures.",
     link: "https://github.com/matthewhamilton3141/portfolio", 
-    liveUrl: "https://matthewhamilton.vercel.app/", 
     useSignatureThumbnail: true,
     videoSrc: "/videos/portfolio-preview.mp4",        
     webmVideoSrc: "/videos/portfolio-preview.webm",   
@@ -180,17 +179,17 @@ export function ProjectsSection() {
               {/* Links Box for List layout */}
               <div className="flex items-center gap-6 mt-4 sm:mt-0 z-30">
                 {project.link && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline cursor-none">Code &rarr;</a>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline cursor-none">github repo &rarr;</a>
                 )}
                 {project.liveUrl && (
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline cursor-none">Try Live &rarr;</a>
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline cursor-none"> try &rarr;</a>
                 )}
               </div>
             </div>
           ))}
 
           {/* Floating Live-Hover Preview Window */}
-          {hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
+          {/*hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
             <div 
               className="fixed pointer-events-none hidden lg:block z-50 w-[240px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl animate-fade-in"
               style={{
@@ -201,7 +200,7 @@ export function ProjectsSection() {
             >
               <ProjectThumbnail project={projects[hoveredListIndex]} />
             </div>
-          )}
+          )*/}
         </div>
       )}
     </section>
