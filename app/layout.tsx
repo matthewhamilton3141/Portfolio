@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "matthew h",
     description: "swe, systems design engineering @ uwaterloo",
-    url: "https://matthewhamilton.vercel.app",
+    url: "https://matthewhamilton.dev",
     siteName: "matthew h",
     type: "website",
     locale: "en_US",
     images: [
       {
-        url: "https://matthewhamilton.vercel.app/images/icon.png", // Make sure to save a screenshot as og-preview.png in public/images/
+        url: "https://matthewhamilton.dev/images/icon.png", // Make sure to save a screenshot as og-preview.png in public/images/
         width: 1200,
         height: 630,
         alt: "swe, systems design engineering @ uwaterloo",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "matthew h",
     description: "swe, systems design engineering @ uwaterloo",
-    images: ["https://matthewhamilton.vercel.app/images/icon.png"],
+    images: ["https://matthewhamilton.dev/images/icon.png"],
   },
 }
 
