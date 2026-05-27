@@ -1,3 +1,16 @@
+/*
+    type: "live-photo",
+    category: "computer vision / ml",
+    title: "Sign Language Translator",
+    description: "ASL alphabet translation using MediaPipe hand landmarks and a custom classification pipeline.",
+    link: "https://github.com/matthewhamilton3141/MediaPipe-sign-language", 
+    liveUrl: "https://media-pipe-sign-language.vercel.app/", 
+    thumbnailSrc: "/images/videosoon.png",  
+    videoSrc: "/videos/sign-language-live.mp4",        
+    webmVideoSrc: "/videos/sign-language-live.webm",   
+  */
+
+
 // components/projects-section.tsx
 "use client"
 
@@ -14,17 +27,6 @@ const projects = [
     useSignatureThumbnail: true,
     videoSrc: "/videos/portfolio-preview.mp4",        
     webmVideoSrc: "/videos/portfolio-preview.webm",   
-  },
-  {
-    type: "live-photo",
-    category: "computer vision / ml",
-    title: "Sign Language Translator",
-    description: "ASL alphabet translation using MediaPipe hand landmarks and a custom classification pipeline.",
-    link: "https://github.com/matthewhamilton3141/MediaPipe-sign-language", 
-    liveUrl: "https://media-pipe-sign-language.vercel.app/", 
-    thumbnailSrc: "/images/videosoon.png",  
-    videoSrc: "/videos/sign-language-live.mp4",        
-    webmVideoSrc: "/videos/sign-language-live.webm",   
   },
   {
     type: "soon",
