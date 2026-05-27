@@ -184,11 +184,17 @@ export function LandingSection() {
         
         {/* Container for Photo + Interactive Logo Sandbox */}
         <div className="flex flex-row items-stretch gap-8 mb-8 w-full max-w-[640px]">
-          {/* Live Photo component */}
+          
+          {/* Live Photo component Wrapper */}
           <div
-            className={`w-[200px] md:w-[240px] aspect-[3/4] rounded-sm relative overflow-hidden flex-shrink-0 transition-all duration-800 ${
+            className={`w-[200px] md:w-[240px] aspect-[3/4] rounded-xl relative overflow-hidden flex-shrink-0 transition-all duration-800 ${
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
+            style={{
+              // Hard anchors to stop hardware-accelerated video frames from escaping the bounds
+              isolation: "isolate",
+              WebkitMaskImage: "-webkit-radial-gradient(white, black)",
+            }}
           >
             <LivePhoto
               thumbnailSrc="/images/thumbnailSrc.jpg"
@@ -200,7 +206,7 @@ export function LandingSection() {
 
           {/* Interactive Physics Canvas Sandbox Area */}
           <div 
-            className={`w-[200px] md:w-[240px] max-w-[240px] aspect-[3/4] rounded-sm border border-dashed border-border/60 bg-surface/20 relative overflow-hidden transition-all duration-800 delay-300 hidden sm:block ${
+            className={`w-[200px] md:w-[240px] max-w-[240px] aspect-[3/4] rounded-xl border border-dashed border-border/60 bg-surface/20 relative overflow-hidden transition-all duration-800 delay-300 hidden sm:block ${
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
           >
