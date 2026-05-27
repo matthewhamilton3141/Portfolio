@@ -284,25 +284,10 @@ export function LandingSection() {
 
 interface LogoItem {
   img: HTMLImageElement
-  src: string 
   x: number
   y: number
-  vx: number
-  vy: number
-  baseWidth: number  
-  baseHeight: number 
-  width: number  
-  height: number 
-  radius: number 
-  isDragging: boolean
-  isEaten: boolean
-  loaded: boolean 
-}
-
-interface LogoItem {
-  img: HTMLImageElement
-  x: number
-  y: number
+  targetX: number // NEW: Tracks mouse position for smooth easing
+  targetY: number // NEW: Tracks mouse position for smooth easing
   vx: number
   vy: number
   radius: number 
@@ -316,7 +301,6 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const itemsRef = useRef<LogoItem[]>([])
   const dragItemIndex = useRef<number | null>(null)
-  const lastMousePos = useRef({ x: 0, y: 0, time: 0 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -324,28 +308,21 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // FIX: Measure the container's physical layout size dynamically from the DOM
     const rect = canvas.getBoundingClientRect()
     const containerWidth = rect.width || 240
     const containerHeight = rect.height || 320
 
-    // FIX: Multiply the internal drawing resolution by the screen's device pixel ratio (e.g., 2x or 3x)
     const dpr = window.devicePixelRatio || 1
     canvas.width = containerWidth * dpr
     canvas.height = containerHeight * dpr
     
-    // Lock the CSS presentation size to match layout bounds exactly
     canvas.style.width = `${containerWidth}px`
     canvas.style.height = `${containerHeight}px`
-    
-    // Scale the context matrix so your existing physics calculations map perfectly
     ctx.scale(dpr, dpr)
 
-    // FIX: Enable high-quality image smoothing algorithms in the canvas engine
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = "high"
 
-    // Dynamically size items based on container boundaries
     let targetSize = 96
     if (logos.length > 3) targetSize = 74
 
@@ -358,7 +335,8 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
       img.src = src
       
       const angle = Math.random() * Math.PI * 2
-      const speed = 1 + Math.random() * 0.6
+      // Slightly dialed down base speed so they drift elegantly
+      const speed = 0.4 + Math.random() * 0.4
 
       const colIndex = idx % cols
       const rowIndex = Math.floor(idx / cols)
@@ -370,6 +348,8 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
         img,
         x: Math.max(10, Math.min(containerWidth - targetSize - 10, startX)),
         y: Math.max(10, Math.min(containerHeight - targetSize - 10, startY)),
+        targetX: Math.max(10, Math.min(containerWidth - targetSize - 10, startX)),
+        targetY: Math.max(10, Math.min(containerHeight - targetSize - 10, startY)),
         vx: Math.cos(angle) * speed, 
         vy: Math.sin(angle) * speed, 
         radius: targetSize / 2,
@@ -402,6 +382,7 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
       ctx.clearRect(0, 0, containerWidth, containerHeight)
       const items = itemsRef.current.filter(item => item.loaded) 
 
+      // ORIGINAL BOUNCE PHYSICS ENGINE
       for (let i = 0; i < items.length; i++) {
         for (let j = i + 1; j < items.length; j++) {
           const item1 = items[i]
@@ -452,7 +433,22 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
       }
 
       items.forEach((item) => {
-        if (!item.isDragging) {
+        if (item.isDragging) {
+          const prevX = item.x
+          const prevY = item.y
+
+          // FIXED: Smoothly transition to mouse coordinates over a few frames (0.15 = 15% travel per frame)
+          item.x += (item.targetX - item.x) * 0.15
+          item.y += (item.targetY - item.y) * 0.15
+
+          // Generate fluid velocity vectors based on your real throw speed
+          item.vx = (item.x - prevX) * 0.4
+          item.vy = (item.y - prevY) * 0.4
+        } else {
+          // Subtle drag friction so they slow down beautifully after a big throw
+          item.vx *= 0.98
+          item.vy *= 0.98
+
           item.x += item.vx
           item.y += item.vy
 
@@ -497,7 +493,8 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
         if (pos.x >= item.x && pos.x <= item.x + item.width && pos.y >= item.y && pos.y <= item.y + item.height) {
           dragItemIndex.current = itemsRef.current.indexOf(item)
           item.isDragging = true
-          lastMousePos.current = { x: pos.x, y: pos.y, time: performance.now() }
+          item.targetX = pos.x - item.width / 2
+          item.targetY = pos.y - item.height / 2
           break
         }
       }
@@ -507,23 +504,21 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
       if (dragItemIndex.current === null) return
       const pos = getCanvasMousePos(e)
       const item = itemsRef.current[dragItemIndex.current]
-      const now = performance.now()
 
-      const dt = now - lastMousePos.current.time
-      if (dt > 0) {
-        item.vx = (pos.x - lastMousePos.current.x) / (dt * 0.35)
-        item.vy = (pos.y - lastMousePos.current.y) / (dt * 0.35)
-      }
-
-      item.x = pos.x - item.width / 2
-      item.y = pos.y - item.height / 2
-
-      lastMousePos.current = { x: pos.x, y: pos.y, time: now }
+      // Set target properties instead of instantly hard-snapping layout parameters
+      item.targetX = pos.x - item.width / 2
+      item.targetY = pos.y - item.height / 2
     }
 
     const handleMouseUp = () => {
       if (dragItemIndex.current === null) return
-      itemsRef.current[dragItemIndex.current].isDragging = false
+      const item = itemsRef.current[dragItemIndex.current]
+      item.isDragging = false
+
+      // Prevent extreme speed spikes if a user whips their mouse excessively fast
+      item.vx = Math.max(-4, Math.min(4, item.vx))
+      item.vy = Math.max(-4, Math.min(4, item.vy))
+
       dragItemIndex.current = null
     }
 
@@ -543,7 +538,7 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
     <canvas 
       ref={canvasRef} 
       className="absolute inset-0 w-full h-full select-none"
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: 'grab' }}
     />
   )
 }, (prevProps, nextProps) => {
