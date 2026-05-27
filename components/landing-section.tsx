@@ -275,6 +275,24 @@ export function LandingSection() {
   )
 }
 
+
+interface LogoItem {
+  img: HTMLImageElement
+  src: string 
+  x: number
+  y: number
+  vx: number
+  vy: number
+  baseWidth: number  
+  baseHeight: number 
+  width: number  
+  height: number 
+  radius: number 
+  isDragging: boolean
+  isEaten: boolean
+  loaded: boolean 
+}
+
 interface LogoItem {
   img: HTMLImageElement
   x: number
