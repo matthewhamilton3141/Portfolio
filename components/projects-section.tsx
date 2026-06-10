@@ -261,7 +261,7 @@ function ProjectCardDetails({ project, isActive }: { project: any; isActive: boo
       
       <div className={`mt-4 flex items-center gap-6 transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         {project.link && (
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline transition-all duration-200 cursor-none">Code &rarr;</a>
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline transition-all duration-200 cursor-none">github repo&rarr;</a>
         )}
         {project.liveUrl && (
           <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline transition-all duration-200 cursor-none">Try Live &rarr;</a>
