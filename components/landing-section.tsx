@@ -91,7 +91,7 @@ export function LandingSection() {
               showElements.eyebrow ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
           >
-            aspiring software engineer
+            engineering student @ uwaterloo
           </p>
 
           {/* Interactive Name Container */}
@@ -157,7 +157,7 @@ export function LandingSection() {
             }`}
             style={{ fontFamily: "system-ui, sans-serif" }}
           >
-            engineering student @ uwaterloo
+            seeking summer '27 internship opportunities
           </p>
 
           {/* Signature */}
