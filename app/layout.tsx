@@ -4,7 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { CustomCursor } from "@/components/custom-cursor"
 import { ThemeMenu } from "@/components/theme-menu"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: "matthew h",
@@ -60,6 +60,7 @@ export default function RootLayout({
           {/* Global UI Components */}
           <CustomCursor />
           <ThemeMenu />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
