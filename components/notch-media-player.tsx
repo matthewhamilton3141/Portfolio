@@ -18,7 +18,7 @@ const TRACKS: Track[] = [
   {
     title: "who knows",
     artist: "daniel caesar",
-    src: "/audio/whoknows.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/audio/whoknows.mp3",
     coverUrl: "/images/sonofspergy.jpg", 
     waveColor: "linear-gradient(to top, #800020,  #c60032ff )", 
     progressColor: "#E2E8F0"
@@ -26,7 +26,7 @@ const TRACKS: Track[] = [
   {
     title: "japanese denim",
     artist: "daniel caesar",
-    src: "/audio/japanesedenim.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/japanesedenim.mp3",
     coverUrl: "/images/japanesedenim.jpg", 
     waveColor: "linear-gradient(to top, #e2e2e2ff,  #a5a5a5ff )",
     progressColor: "#E2E8F0" 
@@ -34,7 +34,7 @@ const TRACKS: Track[] = [
   {
     title: "nights",
     artist: "frank ocean",
-    src: "/audio/nights.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/nights.mp3",
     coverUrl: "/images/blond.jpg",
     waveColor: "linear-gradient(to top, #22C55E, #e4e4e4ff)",
     progressColor: "#E2E8F0"
@@ -42,7 +42,7 @@ const TRACKS: Track[] = [
   {
     title: "seigfried",
     artist: "frank ocean",
-    src: "/audio/seigfried.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/seigfried.mp3",
     coverUrl: "/images/blond.jpg",
     waveColor: "linear-gradient(to top, #22C55E, #e4e4e4ff)",
     progressColor: "#E2E8F0"
@@ -50,7 +50,7 @@ const TRACKS: Track[] = [
   {
     title: "rearrange my world",
     artist: "daniel caesar (ft. rex orange county)",
-    src: "/audio/rearrangemyworld.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/rearrangemyworld.mp3",
     coverUrl: "/images/rearrange.jpeg",
     waveColor: "#b7b7b7ff", 
     progressColor: "#E2E8F0"
@@ -58,7 +58,7 @@ const TRACKS: Track[] = [
   {
     title: "ochos rios",
     artist: "daniel caesar",
-    src: "/audio/ochosrios.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/ochosrios.mp3",
     coverUrl: "/images/neverenough.jpg",
     waveColor: "#4169E1", 
     progressColor: "#E2E8F0"
@@ -66,7 +66,7 @@ const TRACKS: Track[] = [
   {
     title: "clarity",
     artist: "zedd (ft. foxes)",
-    src: "/audio/clarity.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/clarity.mp3",
     coverUrl: "/images/clarity.jpg",
     waveColor: "linear-gradient(to top, #3B82F6, #22C55E)", 
     progressColor: "#E2E8F0"
@@ -74,7 +74,7 @@ const TRACKS: Track[] = [
   {
     title: "whiplash",
     artist: "aespa",
-    src: "/audio/whiplash.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/whiplash.mp3",
     coverUrl: "/images/whiplash.jpg",
     waveColor: "#FFFFFF", 
     progressColor: "#E2E8F0"
@@ -82,7 +82,7 @@ const TRACKS: Track[] = [
   {
     title: "cyanide",
     artist: "daniel caesar",
-    src: "/audio/cyanide.mp3",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/audio/cyanide.mp3",
     coverUrl: "/images/casestudy.jpeg",
     waveColor: "linear-gradient(to top, #7aadffb9, #b7b7b7ff)",
     progressColor: "#E2E8F0"
