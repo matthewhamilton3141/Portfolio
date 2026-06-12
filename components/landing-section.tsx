@@ -200,9 +200,9 @@ export function LandingSection() {
           >
             <LivePhoto
               thumbnailSrc="/images/thumbnailSrc.jpg"
-              videoSrc="/videos/videoSrc.mp4"
-              webmVideoSrc="/videos/videoSrc.webm"
-              alt="Profile photo"
+              videoSrc="https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/videoSrc.mp4"
+              webmVideoSrc="https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/videoSrc.webm"
+              alt="live photo"
             />
           </div>
 
