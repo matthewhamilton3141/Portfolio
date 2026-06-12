@@ -157,7 +157,7 @@ export function LandingSection() {
             }`}
             style={{ fontFamily: "system-ui, sans-serif" }}
           >
-            seeking summer '27 internship opportunities
+            seeking spring '27 internship opportunities
           </p>
 
           {/* Signature */}
