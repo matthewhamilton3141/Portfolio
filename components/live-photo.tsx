@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import Image from "next/image"
 
 interface LivePhotoProps {
   thumbnailSrc: string
@@ -26,27 +27,25 @@ export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/vide
     setIsHovered(false)
     if (videoRef.current) {
       videoRef.current.pause()
-      videoRef.current.currentTime = 0 
+      videoRef.current.currentTime = 0
     }
   }
 
   return (
-    <div 
+    <div
       className="relative w-full h-full cursor-pointer bg-neutral-200 block"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         transform: isHovered ? "scale(1.04) translateY(-4px) translateZ(0)" : "scale(1) translateY(0) translateZ(0)",
-        boxShadow: isHovered 
-          ? "0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15)" 
+        boxShadow: isHovered
+          ? "0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15)"
           : "0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
-        
-        borderRadius: "inherit", // Locks onto the parent wrapper's 12px curvature
-        overflow: "hidden",   
+        borderRadius: "inherit",
+        overflow: "hidden",
         transition: "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease-in-out",
         willChange: "transform",
-        
-        isolation: "isolate", 
+        isolation: "isolate",
         WebkitMaskImage: "-webkit-radial-gradient(white, black)",
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden"
@@ -64,8 +63,8 @@ export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/vide
           opacity: isHovered ? 1 : 0,
           zIndex: isHovered ? 20 : 10,
           transition: "opacity 0.25s ease-in-out",
-          borderRadius: "inherit", // Inherits parent clip mask
-          WebkitMaskImage: "-webkit-radial-gradient(white, black)" // Backup clipping layer protection
+          borderRadius: "inherit",
+          WebkitMaskImage: "-webkit-radial-gradient(white, black)"
         }}
       >
         <source src={webmVideoSrc} type="video/webm" />
@@ -73,10 +72,11 @@ export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/vide
       </video>
 
       {/* 2. Image Layer */}
-      <img
+      <Image
         src={thumbnailSrc}
         alt={alt}
-        className="absolute inset-0 w-full h-full object-cover block"
+        fill
+        className="object-cover block"
         style={{
           opacity: isHovered ? 0 : 1,
           zIndex: isHovered ? 10 : 20,

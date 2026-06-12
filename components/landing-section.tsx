@@ -167,9 +167,11 @@ export function LandingSection() {
             }`}
             aria-hidden="true"
           >
-            <img 
+            <Image
               src="/images/signature.svg" 
               alt="" 
+              width={400}
+              height={130}
               className="h-[105px] md:h-[130px] w-auto dark:invert dark:opacity-80"
               style={{ filter: "var(--signature-filter, none)" }}
             />

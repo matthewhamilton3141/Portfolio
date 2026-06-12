@@ -15,6 +15,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { LivePhoto } from "./live-photo"
 
 const projects = [
@@ -214,7 +215,9 @@ function ProjectThumbnail({ project }: { project: any }) {
   if (project.type === "soon") {
     return (
       <div className="w-full h-full rounded-lg bg-muted/40 border border-dashed border-border flex flex-col items-center justify-center p-6 select-none">
-        <img src={project.logoSrc} alt="Logo" className="w-16 h-16 object-contain dark:invert-[0.15] opacity-60 mb-3 animate-pulse" />
+        <div className="relative w-16 h-16 mb-3">
+          <Image src={project.logoSrc} alt="Logo" fill className="object-contain dark:invert-[0.15] opacity-60 animate-pulse" />
+        </div>
         <span className="text-[10px] tracking-[0.18em] uppercase text-muted-foreground font-semibold">Coming Soon</span>
       </div>
     )
@@ -232,7 +235,7 @@ function ProjectThumbnail({ project }: { project: any }) {
   if (project.useSignatureThumbnail) {
     return (
       <div className="w-full h-full rounded-lg bg-muted/30 border border-border flex items-center justify-center p-8 select-none">
-        <img src="/images/signature.svg" alt="Signature" className="w-auto h-[65%] object-contain dark:invert opacity-80" />
+        <Image src="/images/signature.svg" alt="Signature" width={300} height={100} className="w-auto h-[65%] object-contain dark:invert opacity-80" />
       </div>
     )
   }
