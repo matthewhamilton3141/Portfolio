@@ -234,6 +234,7 @@ export function NotchMediaPlayer() {
     } else {
       audioRef.current.pause()
     }
+    window.dispatchEvent(new CustomEvent("poroPlayState", {detail: { isPlaying } }))
   }, [isPlaying])
 
   useEffect(() => {

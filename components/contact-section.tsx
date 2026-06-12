@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Poro } from "./poro"
 
 const modernLinks = [
   { 
-    label: "resume (under construction)", 
+    label: "resume (empty)", 
     href: "https://www.linkedin.com/in/matthewhamilton3141/", 
     external: true,
     icon: (
@@ -64,7 +65,7 @@ const modernLinks = [
 ]
 
 export function ContactSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -77,28 +78,31 @@ export function ContactSection() {
       },
       { threshold: 0.15 }
     )
-
-    if (containerRef.current) observer.observe(containerRef.current)
+    if (sectionRef.current) observer.observe(sectionRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
     <section
       id="contact"
-      className="min-h-screen scroll-snap-start flex flex-col justify-center items-center bg-warm-white transition-colors duration-500 px-6 relative"
+      ref={sectionRef}
+      className="min-h-screen scroll-snap-start relative bg-warm-white transition-colors duration-500 overflow-hidden"
     >
+      {/* Poro fills entire section, listens to mouse on the section itself */}
+      <div className="absolute inset-0 z-0">
+        <Poro containerRef={sectionRef} />
+      </div>
+
+      {/* Links float centered on top */}
       <div
-        ref={containerRef}
-        className={`flex flex-col items-center text-center transition-all duration-1000 transform ${
+        className={`relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        {/* Editorial label heading */}
         <p className="text-[11px] tracking-[0.25em] lowercase text-ink-muted mb-10 font-sans">
           get in touch
         </p>
 
-        {/* Changed layout back to flex-col to let items descend vertically */}
         <div className="flex flex-col items-center gap-5 md:gap-6">
           {modernLinks.map((link) => (
             <a
@@ -106,15 +110,12 @@ export function ContactSection() {
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className="group flex items-center gap-3.5 no-underline cursor-none py-1 transition-transform duration-300 hover:scale-[1.03]"
+              className="group flex items-center gap-3.5 no-underline cursor-none py-1 transition-transform duration-300 hover:scale-[1.03] pointer-events-auto"
             >
-              {/* Icon alignment vector system */}
               <div className="text-ink-muted transition-colors duration-300 group-hover:text-accent-warm flex items-center justify-center">
                 {link.icon}
               </div>
-
-              {/* Clean typography style matching your reference variant */}
-              <span 
+              <span
                 className="block font-semibold tracking-[0.06em] lowercase text-[13px] md:text-[14px] text-ink transition-colors duration-300 group-hover:text-accent-warm"
                 style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}
               >
