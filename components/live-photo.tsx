@@ -15,12 +15,14 @@ export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/vide
   const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseEnter = () => {
-    setIsHovered(true)
-    if (videoRef.current) {
-      videoRef.current.play().catch((err) => {
-        console.warn("Video playback was interrupted or file is unreadable:", err)
-      })
-    }
+      setIsHovered(true)
+      if (videoRef.current) {
+        videoRef.current.play().catch((err) => {
+          if (err.name !== "AbortError") {
+            console.error("Actual video playback error:", err)
+          }
+        })
+      }
   }
 
   const handleMouseLeave = () => {
@@ -58,6 +60,7 @@ export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/vide
         muted
         playsInline
         preload="auto"
+        crossOrigin="anonymous"
         className="absolute inset-0 w-full h-full object-cover block"
         style={{
           opacity: isHovered ? 1 : 0,

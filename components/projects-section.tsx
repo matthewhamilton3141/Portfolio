@@ -27,22 +27,20 @@ const projects = [
     category: "systems & front-end engineering",
     title: "portfolio",
     description: "An interactive, high-performance web experience featuring a layout-synchronized audio visualizer and custom stacked event architectures.",
-    link: "https://github.com/matthewhamilton3141/portfolio", 
+    link: "https://github.com/matthewhamilton3141/portfolio",
     useSignatureThumbnail: true,
-    // Safely removed experimental video markers entirely so it falls back cleanly
   },
   {
     type: "hackathon",
     category: "full-stack dev & blockchain",
     title: "baam",
     description: "A social accountability platform linking Solana smart contracts with a web app and native iMessage extension for peer-to-peer betting.",
-    link: "https://github.com/BansonVuong/BAAM.git",  
-    thumbnailSrc: "/images/baamlogo.png",  
-    videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baam-preview.mp4",        
-    webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baam-preview.webm",   
+    link: "https://github.com/BansonVuong/BAAM.git",
+    thumbnailSrc: "/images/baamlogo.png",
+    videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baampreview.mp4",
+    webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baampreview.webm",
     logoSrc: "/images/jamhackslogo.png",
     logoLink: "https://jamhacks.ca",
-    startTime: 2.23
   },
   {
     type: "placeholder",
@@ -51,7 +49,7 @@ const projects = [
   },
 ]
 
-type ViewMode =  "list" | "grid" | "carousel"
+type ViewMode = "list" | "grid" | "carousel"
 
 export function ProjectsSection() {
   const [viewMode, setViewMode] = useState<ViewMode>("list")
@@ -85,7 +83,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="flex bg-muted/40 p-1 rounded-full border border-border/40 backdrop-blur-sm self-stretch sm:self-auto justify-between">
-          {(["list", "grid", "carousel" ] as ViewMode[]).map((mode) => (
+          {(["list", "grid", "carousel"] as ViewMode[]).map((mode) => (
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
@@ -100,7 +98,6 @@ export function ProjectsSection() {
           ))}
         </div>
       </div>
-      
 
       {/* --- RENDER 3: CAROUSEL VIEW --- */}
       {viewMode === "carousel" && (
@@ -155,11 +152,10 @@ export function ProjectsSection() {
           ))}
         </div>
       )}
-      
 
       {/* --- RENDER 1: LIST VIEW --- */}
       {viewMode === "list" && (
-        <div 
+        <div
           onMouseMove={handleMouseMove}
           className="w-full max-w-[1100px] flex flex-col relative animate-fade-in border-t border-border/40"
         >
@@ -200,7 +196,7 @@ export function ProjectsSection() {
                   <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline cursor-none">github repo &rarr;</a>
                 )}
                 {project.liveUrl && (
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline cursor-none"> try &rarr;</a>
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline cursor-none">try &rarr;</a>
                 )}
               </div>
             </div>
@@ -208,7 +204,7 @@ export function ProjectsSection() {
 
           {/* Floating Live-Hover Preview Window */}
           {hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
-            <div 
+            <div
               className="fixed pointer-events-none hidden lg:block z-50 w-[240px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl bg-zinc-950 animate-fade-in"
               style={{
                 left: `${mousePos.x + 20}px`,
@@ -227,17 +223,27 @@ export function ProjectsSection() {
 
 /* Explicit asset router for the List View floating element */
 function FloatingHoverPreview({ project }: { project: any }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const targetVideo = project.videoSrc || project.hoverVideoSrc;
-  const targetWebm = project.webmVideoSrc || project.hoverWebmVideoSrc;
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const targetVideo = project.videoSrc || project.hoverVideoSrc
+  const targetWebm = project.webmVideoSrc || project.hoverWebmVideoSrc
 
   useEffect(() => {
-    if (videoRef.current && project.startTime) {
-      videoRef.current.currentTime = project.startTime;
-    }
-  }, [project.startTime]);
+    const video = videoRef.current
+    if (!video || project.startTime == null) return
 
-  // Only render the video frame layout if an explicit video path parameter actually exists
+    const seekToStart = () => {
+      video.currentTime = project.startTime
+    }
+
+    // If metadata is already loaded, seek immediately; otherwise wait
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      seekToStart()
+    } else {
+      video.addEventListener("loadedmetadata", seekToStart, { once: true })
+      return () => video.removeEventListener("loadedmetadata", seekToStart)
+    }
+  }, [project.startTime])
+
   if (targetVideo) {
     return (
       <video
@@ -246,41 +252,39 @@ function FloatingHoverPreview({ project }: { project: any }) {
         muted
         loop
         playsInline
+        crossOrigin="anonymous"
         className="w-full h-full object-cover rounded-xl"
       >
         {targetWebm && <source src={targetWebm} type="video/webm" />}
         <source src={targetVideo} type="video/mp4" />
       </video>
-    );
+    )
   }
 
-  // Fallback precisely to the static signature thumbnail frame layout if no tracking links match
-  return <ProjectThumbnail project={project} />;
+  return <ProjectThumbnail project={project} />
 }
 
 function ProjectThumbnail({ project }: { project: any }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!containerRef.current || !project.startTime) return;
+    if (!containerRef.current || project.startTime == null) return
 
-    const applyOffset = () => {
-      const el = containerRef.current?.querySelector("video");
-      if (el) {
-        el.currentTime = project.startTime;
-      }
-    };
+    const video = containerRef.current.querySelector("video")
+    if (!video) return
 
-    applyOffset();
-    
-    const syncInterval = setInterval(applyOffset, 150);
-    const timeout = setTimeout(() => clearInterval(syncInterval), 1000);
+    const seekToStart = () => {
+      video.currentTime = project.startTime
+    }
 
-    return () => {
-      clearInterval(syncInterval);
-      clearTimeout(timeout);
-    };
-  }, [project.startTime]);
+    // Wait for metadata before seeking — never fight playback with an interval
+    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+      seekToStart()
+    } else {
+      video.addEventListener("loadedmetadata", seekToStart, { once: true })
+      return () => video.removeEventListener("loadedmetadata", seekToStart)
+    }
+  }, [project.startTime])
 
   if (project.type === "soon") {
     return (
@@ -292,16 +296,20 @@ function ProjectThumbnail({ project }: { project: any }) {
       </div>
     )
   }
+
   if (project.type === "placeholder") {
     return (
       <div className="w-full h-full rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center p-6 text-center">
         <div className="w-6 h-6 mb-3 opacity-40 animate-spin text-muted-foreground">
-          <svg className="stroke-current fill-none" strokeWidth="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeDasharray="16 12" strokeLinecap="round" /></svg>
+          <svg className="stroke-current fill-none" strokeWidth="1.8" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" strokeDasharray="16 12" strokeLinecap="round" />
+          </svg>
         </div>
         <p className="text-xs font-bold text-muted-foreground">{project.title}</p>
       </div>
     )
   }
+
   if (project.useSignatureThumbnail) {
     return (
       <div className="w-full h-full rounded-xl bg-muted/30 border border-border flex items-center justify-center p-8 select-none">
@@ -309,6 +317,7 @@ function ProjectThumbnail({ project }: { project: any }) {
       </div>
     )
   }
+
   return (
     <div ref={containerRef} className="w-full h-full relative group/thumb rounded-xl overflow-hidden">
       <LivePhoto
@@ -332,18 +341,18 @@ function ProjectCardDetails({ project, isActive }: { project: any; isActive: boo
           {project.title}
         </h3>
         {project.logoSrc && (
-          <a 
-            href={project.logoLink} 
-            target="_blank" 
+          <a
+            href={project.logoLink}
+            target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center transition-transform hover:scale-110 cursor-none"
             title="View Hackathon"
           >
-            <Image 
-              src={project.logoSrc} 
-              alt="Hackathon Badge" 
-              width={18} 
-              height={18} 
+            <Image
+              src={project.logoSrc}
+              alt="Hackathon Badge"
+              width={18}
+              height={18}
               className="object-contain"
             />
           </a>
@@ -352,7 +361,7 @@ function ProjectCardDetails({ project, isActive }: { project: any; isActive: boo
       <p className="text-[12px] leading-[1.6] text-muted-foreground font-medium h-[65px] overflow-hidden line-clamp-3">
         {project.description}
       </p>
-      
+
       <div className={`mt-4 flex items-center gap-6 transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         {project.link && (
           <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline transition-all duration-200 cursor-none">github repo&rarr;</a>
