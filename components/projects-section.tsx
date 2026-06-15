@@ -26,8 +26,8 @@ const projects = [
     type: "hackathon",
     category: "full-stack dev & blockchain",
     title: "baam",
-    description: "A social accountability platform linking Solana smart contracts with a web app and native iMessage extension for peer-to-peer betting.",
-    link: "https://github.com/BansonVuong/BAAM.git",
+    description: "BAAM goes where you go, a social betting platform for your personal circle linking Solana smart contracts, MongoDB Atlas for data management, and Vultr for backend infrastructure to provide a native iMessage plugin, Discord bot, and a centralized web app.",
+    link: "https://github.com/BansonVuong/BAAM",
     thumbnailSrc: "/images/baamlogo.png",
     videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baamimsg.mp4",
     webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baamimsg.webm",
@@ -39,7 +39,7 @@ const projects = [
     type: "live-photo",
     category: "systems & front-end engineering",
     title: "portfolio",
-    description: "An interactive, high-performance web experience featuring a layout-synchronized audio visualizer and custom stacked event architectures.",
+    description: "Utilizes React and TypeScript to create a complex, stacked event architecture to create a high-fidelity UI. Leverages Cloudflare R2 Object Storage for efficient asset delivery and is deployed through Vercel to ensure rapid, globally distributed performance. Real-time state management, cloud infrastructure integration for a smooth, responsive user experience.",
     link: "https://github.com/matthewhamilton3141/portfolio",
     thumbnailSrc: "/images/casestudy1.jpeg",
     videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/portfolio.mp4",
@@ -52,27 +52,16 @@ const projects = [
   },
 ]
 
-type ViewMode = "list" | "grid" | "carousel"
+type ViewMode = "list" | "grid"
 
-// Returns true for projects whose thumbnail is a LivePhoto (the only
-// thumbnail type that should be allowed to overflow its container on hover)
 function isLivePhotoProject(project: any) {
   return project.type !== "soon" && project.type !== "placeholder" && !project.useSignatureThumbnail
 }
 
 export function ProjectsSection() {
   const [viewMode, setViewMode] = useState<ViewMode>("list")
-  const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredListIndex, setHoveredListIndex] = useState<number | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % projects.length)
-  }
-
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length)
-  }
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY })
@@ -81,10 +70,10 @@ export function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="min-h-screen w-full bg-background text-foreground transition-colors duration-500 flex flex-col justify-center items-center relative px-[8vw] md:px-[12vw] py-32 overflow-hidden"
+      className="min-h-screen w-full bg-background text-foreground transition-colors duration-500 flex flex-col justify-start items-center relative px-[8vw] md:px-[12vw] pt-20 pb-24 overflow-hidden"
     >
       {/* Header with Integrated View Switcher */}
-      <div className="w-full max-w-[1100px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-16 z-50">
+      <div className="w-full max-w-[1100px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8 z-50">
         <div>
           <h2 className="text-[13px] tracking-[0.25em] lowercase text-muted-foreground font-semibold">
             Projects
@@ -92,7 +81,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="flex bg-muted/40 p-1 rounded-full border border-border/40 backdrop-blur-sm self-stretch sm:self-auto justify-between">
-          {(["list", "grid", "carousel"] as ViewMode[]).map((mode) => (
+          {(["list", "grid"] as ViewMode[]).map((mode) => (
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
@@ -108,71 +97,11 @@ export function ProjectsSection() {
         </div>
       </div>
 
-      {/* --- RENDER 3: CAROUSEL VIEW --- */}
-      {viewMode === "carousel" && (
-        <div className="w-full flex flex-col items-center animate-fade-in">
-          <div className="relative w-full max-w-[1100px] h-[480px] flex items-center justify-center" style={{ perspective: "1200px" }}>
-            {projects.map((project, i) => {
-              let offset = i - activeIndex
-              if (offset < -Math.floor(projects.length / 2)) offset += projects.length
-              if (offset > Math.floor(projects.length / 2)) offset -= projects.length
-
-              const isActive = offset === 0
-              if (Math.abs(offset) > 1) return null
-
-              return (
-                <div
-                  key={project.title}
-                  onClick={() => !isActive && setActiveIndex(i)}
-                  className={`absolute w-[320px] md:w-[380px] bg-card rounded-2xl border border-border/80 p-6 select-none transition-all duration-700 ease-out ${
-                    isActive
-                      ? "cursor-default z-30 opacity-100 hover:z-50"
-                      : "cursor-pointer z-10 opacity-30 hover:opacity-50"
-                  }`}
-                  style={{
-                    transform: `translateX(${offset * 300}px) translateZ(${isActive ? 0 : -200}px) rotateY(${offset * 40}deg)`,
-                    transformStyle: "preserve-3d",
-                  }}
-                >
-                  {!isActive && <div className="absolute inset-0 bg-background/20 backdrop-blur-sm rounded-2xl z-40 pointer-events-none" />}
-                  <div
-                    className={`w-full aspect-[4/3] relative mb-5 z-20 rounded-xl ${
-                      isActive && isLivePhotoProject(project) ? "overflow-visible" : "overflow-hidden"
-                    } ${!isActive ? "pointer-events-none" : ""}`}
-                  >
-                    <ProjectThumbnail project={project} />
-                  </div>
-                  <ProjectCardDetails project={project} isActive={isActive} />
-                </div>
-              )
-            })}
-          </div>
-          <div className="flex items-center gap-8 mt-4 z-10">
-            <button onClick={handlePrev} className="w-10 h-10 rounded-full border border-border flex items-center justify-center bg-card text-muted-foreground hover:text-foreground transition-all cursor-none active:scale-95">&larr;</button>
-            <button onClick={handleNext} className="w-10 h-10 rounded-full border border-border flex items-center justify-center bg-card text-muted-foreground hover:text-foreground transition-all cursor-none active:scale-95">&rarr;</button>
-          </div>
-        </div>
-      )}
-
       {/* --- RENDER 2: GRID VIEW --- */}
       {viewMode === "grid" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch w-full max-w-[1100px] animate-fade-in">
           {projects.map((project) => (
-            <div
-              key={project.title}
-              className={`bg-card rounded-xl border border-border/60 p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 relative ${
-                isLivePhotoProject(project) ? "hover:z-20" : ""
-              }`}
-            >
-              <div
-                className={`w-full aspect-[4/3] relative mb-5 rounded-xl ${
-                  isLivePhotoProject(project) ? "overflow-visible" : "overflow-hidden"
-                }`}
-              >
-                <ProjectThumbnail project={project} />
-              </div>
-              <ProjectCardDetails project={project} isActive={true} />
-            </div>
+            <GridCard key={project.title} project={project} />
           ))}
         </div>
       )}
@@ -242,6 +171,21 @@ export function ProjectsSection() {
         </div>
       )}
     </section>
+  )
+}
+
+function GridCard({ project }: { project: any }) {
+  return (
+    <div className="bg-card rounded-xl border border-border/60 p-7 flex flex-col h-full">
+      <div
+        className={`w-full aspect-[4/3] relative mb-6 rounded-xl ${
+          isLivePhotoProject(project) ? "overflow-visible" : "overflow-hidden"
+        }`}
+      >
+        <ProjectThumbnail project={project} />
+      </div>
+      <ProjectCardDetails project={project} />
+    </div>
   )
 }
 
@@ -352,9 +296,9 @@ function ProjectThumbnail({ project }: { project: any }) {
   )
 }
 
-function ProjectCardDetails({ project, isActive }: { project: any; isActive: boolean }) {
+function ProjectCardDetails({ project }: { project: any }) {
   return (
-    <div className="flex flex-col flex-grow relative z-10">
+    <div className="flex flex-col flex-grow">
       <p className="text-[9px] tracking-[0.18em] uppercase text-muted-foreground/80 font-bold mb-1.5">
         {project.category || "In Development"}
       </p>
@@ -370,21 +314,16 @@ function ProjectCardDetails({ project, isActive }: { project: any; isActive: boo
             className="inline-flex items-center justify-center transition-transform hover:scale-110 cursor-none"
             title="View Hackathon"
           >
-            <Image
-              src={project.logoSrc}
-              alt="Hackathon Badge"
-              width={18}
-              height={18}
-              className="object-contain"
-            />
+            <Image src={project.logoSrc} alt="Hackathon Badge" width={18} height={18} className="object-contain" />
           </a>
         )}
       </div>
-      <p className="text-[12px] leading-[1.6] text-muted-foreground font-medium h-[65px] overflow-hidden line-clamp-3">
+
+      <p className="text-[12px] leading-[1.6] text-muted-foreground font-medium">
         {project.description}
       </p>
 
-      <div className={`mt-4 flex items-center gap-6 transition-opacity duration-300 ${isActive ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+      <div className="mt-auto pt-4 flex items-center gap-6">
         {project.link && (
           <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline transition-all duration-200 cursor-none">github repo&rarr;</a>
         )}
