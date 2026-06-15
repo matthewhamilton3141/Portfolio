@@ -16,7 +16,7 @@ export function LivePhoto({
   videoSrc,
   webmVideoSrc = "/videos/videoSrc.webm",
   alt,
-  hoverScale = 1.12,
+  hoverScale = 1.2,
 }: LivePhotoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -47,10 +47,10 @@ export function LivePhoto({
       onMouseLeave={handleMouseLeave}
       style={{
         transform: isHovered
-          ? `scale(${hoverScale}) translateY(-6px) translateZ(0)`
+          ? `scale(${hoverScale}) translateY(-10px) translateZ(0)`
           : "scale(1) translateY(0) translateZ(0)",
         boxShadow: isHovered
-          ? "0 25px 35px -8px rgb(0 0 0 / 0.25), 0 12px 18px -8px rgb(0 0 0 / 0.2)"
+          ? "0 32px 45px -10px rgb(0 0 0 / 0.3), 0 16px 24px -10px rgb(0 0 0 / 0.22)"
           : "0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
         borderRadius: "inherit",
         overflow: "hidden",

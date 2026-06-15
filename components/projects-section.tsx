@@ -229,14 +229,14 @@ export function ProjectsSection() {
           {/* Floating Live-Hover Preview Window */}
           {hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
             <div
-              className="fixed pointer-events-none hidden lg:block z-50 w-[240px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl bg-zinc-950 animate-fade-in"
+              className="fixed pointer-events-none hidden lg:block z-50 w-[360px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl bg-zinc-950 animate-fade-in"
               style={{
                 left: `${mousePos.x + 20}px`,
-                top: `${mousePos.y - 80}px`,
+                top: `${mousePos.y - 120}px`,
                 transform: "translate3d(0, 0, 0)"
               }}
             >
-              <FloatingHoverPreview project={projects[hoveredListIndex]} />
+              <FloatingHoverPreview key={projects[hoveredListIndex].title} project={projects[hoveredListIndex]} />
             </div>
           )}
         </div>
