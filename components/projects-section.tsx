@@ -22,26 +22,28 @@ import Image from "next/image"
 import { LivePhoto } from "./live-photo"
 
 const projects = [
-  {
-    type: "live-photo",
-    category: "systems & front-end engineering",
-    title: "portfolio",
-    description: "An interactive, high-performance web experience featuring a layout-synchronized audio visualizer and custom stacked event architectures.",
-    link: "https://github.com/matthewhamilton3141/portfolio",
-    useSignatureThumbnail: true,
-  },
-  {
+    {
     type: "hackathon",
     category: "full-stack dev & blockchain",
     title: "baam",
     description: "A social accountability platform linking Solana smart contracts with a web app and native iMessage extension for peer-to-peer betting.",
     link: "https://github.com/BansonVuong/BAAM.git",
     thumbnailSrc: "/images/baamlogo.png",
-    videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baampreview.mp4",
-    webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baampreview.webm",
+    videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baamimsg.mp4",
+    webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baamimsg.webm",
     logoSrc: "/images/jamhackslogo.png",
     logoLink: "https://jamhacks.ca",
     startTime: 2.23
+  },
+  {
+    type: "live-photo",
+    category: "systems & front-end engineering",
+    title: "portfolio",
+    description: "An interactive, high-performance web experience featuring a layout-synchronized audio visualizer and custom stacked event architectures.",
+    link: "https://github.com/matthewhamilton3141/portfolio",
+    thumbnailSrc: "/images/casestudy1.jpeg",
+    videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/portfolio.mp4",
+    webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/portfolio.webm",
   },
   {
     type: "placeholder",
@@ -51,6 +53,12 @@ const projects = [
 ]
 
 type ViewMode = "list" | "grid" | "carousel"
+
+// Returns true for projects whose thumbnail is a LivePhoto (the only
+// thumbnail type that should be allowed to overflow its container on hover)
+function isLivePhotoProject(project: any) {
+  return project.type !== "soon" && project.type !== "placeholder" && !project.useSignatureThumbnail
+}
 
 export function ProjectsSection() {
   const [viewMode, setViewMode] = useState<ViewMode>("list")
@@ -117,7 +125,9 @@ export function ProjectsSection() {
                   key={project.title}
                   onClick={() => !isActive && setActiveIndex(i)}
                   className={`absolute w-[320px] md:w-[380px] bg-card rounded-2xl border border-border/80 p-6 select-none transition-all duration-700 ease-out ${
-                    isActive ? "cursor-default z-30 opacity-100" : "cursor-pointer z-10 opacity-30 hover:opacity-50"
+                    isActive
+                      ? "cursor-default z-30 opacity-100 hover:z-50"
+                      : "cursor-pointer z-10 opacity-30 hover:opacity-50"
                   }`}
                   style={{
                     transform: `translateX(${offset * 300}px) translateZ(${isActive ? 0 : -200}px) rotateY(${offset * 40}deg)`,
@@ -125,7 +135,11 @@ export function ProjectsSection() {
                   }}
                 >
                   {!isActive && <div className="absolute inset-0 bg-background/20 backdrop-blur-sm rounded-2xl z-40 pointer-events-none" />}
-                  <div className="w-full aspect-[4/3] relative mb-5 z-20 rounded-xl overflow-hidden">
+                  <div
+                    className={`w-full aspect-[4/3] relative mb-5 z-20 rounded-xl ${
+                      isActive && isLivePhotoProject(project) ? "overflow-visible" : "overflow-hidden"
+                    } ${!isActive ? "pointer-events-none" : ""}`}
+                  >
                     <ProjectThumbnail project={project} />
                   </div>
                   <ProjectCardDetails project={project} isActive={isActive} />
@@ -144,8 +158,17 @@ export function ProjectsSection() {
       {viewMode === "grid" && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch w-full max-w-[1100px] animate-fade-in">
           {projects.map((project) => (
-            <div key={project.title} className="bg-card rounded-xl border border-border/60 p-6 flex flex-col transition-all duration-300 hover:-translate-y-1">
-              <div className="w-full aspect-[4/3] relative mb-5 rounded-xl overflow-hidden">
+            <div
+              key={project.title}
+              className={`bg-card rounded-xl border border-border/60 p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 relative ${
+                isLivePhotoProject(project) ? "hover:z-20" : ""
+              }`}
+            >
+              <div
+                className={`w-full aspect-[4/3] relative mb-5 rounded-xl ${
+                  isLivePhotoProject(project) ? "overflow-visible" : "overflow-hidden"
+                }`}
+              >
                 <ProjectThumbnail project={project} />
               </div>
               <ProjectCardDetails project={project} isActive={true} />
@@ -236,7 +259,6 @@ function FloatingHoverPreview({ project }: { project: any }) {
       video.currentTime = project.startTime
     }
 
-    // If metadata is already loaded, seek immediately; otherwise wait
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
       seekToStart()
     } else {
@@ -278,7 +300,6 @@ function ProjectThumbnail({ project }: { project: any }) {
       video.currentTime = project.startTime
     }
 
-    // Wait for metadata before seeking — never fight playback with an interval
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
       seekToStart()
     } else {
@@ -320,7 +341,7 @@ function ProjectThumbnail({ project }: { project: any }) {
   }
 
   return (
-    <div ref={containerRef} className="w-full h-full relative group/thumb rounded-xl overflow-hidden">
+    <div ref={containerRef} className="w-full h-full relative group/thumb rounded-xl overflow-visible">
       <LivePhoto
         thumbnailSrc={project.thumbnailSrc || ""}
         videoSrc={project.videoSrc || ""}

@@ -8,21 +8,28 @@ interface LivePhotoProps {
   videoSrc: string
   webmVideoSrc?: string
   alt: string
+  hoverScale?: number
 }
 
-export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/videoSrc.webm", alt }: LivePhotoProps) {
+export function LivePhoto({
+  thumbnailSrc,
+  videoSrc,
+  webmVideoSrc = "/videos/videoSrc.webm",
+  alt,
+  hoverScale = 1.12,
+}: LivePhotoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseEnter = () => {
-      setIsHovered(true)
-      if (videoRef.current) {
-        videoRef.current.play().catch((err) => {
-          if (err.name !== "AbortError") {
-            console.error("Actual video playback error:", err)
-          }
-        })
-      }
+    setIsHovered(true)
+    if (videoRef.current) {
+      videoRef.current.play().catch((err) => {
+        if (err.name !== "AbortError") {
+          console.error("Actual video playback error:", err)
+        }
+      })
+    }
   }
 
   const handleMouseLeave = () => {
@@ -39,9 +46,11 @@ export function LivePhoto({ thumbnailSrc, videoSrc, webmVideoSrc = "/videos/vide
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: isHovered ? "scale(1.04) translateY(-4px) translateZ(0)" : "scale(1) translateY(0) translateZ(0)",
+        transform: isHovered
+          ? `scale(${hoverScale}) translateY(-6px) translateZ(0)`
+          : "scale(1) translateY(0) translateZ(0)",
         boxShadow: isHovered
-          ? "0 20px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.15)"
+          ? "0 25px 35px -8px rgb(0 0 0 / 0.25), 0 12px 18px -8px rgb(0 0 0 / 0.2)"
           : "0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
         borderRadius: "inherit",
         overflow: "hidden",
