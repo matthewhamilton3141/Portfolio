@@ -41,6 +41,7 @@ const projects = [
     webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/baampreview.webm",
     logoSrc: "/images/jamhackslogo.png",
     logoLink: "https://jamhacks.ca",
+    startTime: 2.23
   },
   {
     type: "placeholder",
