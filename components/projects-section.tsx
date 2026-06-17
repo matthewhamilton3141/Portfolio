@@ -23,6 +23,13 @@ import { LivePhoto } from "./live-photo"
 
 const projects = [
     {
+      type: "placeholder",
+      category: "currently building",
+      title: "Retermina",
+      description: "Retermina is a highly-customizable terminal wrapper built with Tauri & React. It features modular drag-and-drop workspaces, Iris (zero-token local macros & localhost tracker), and 5 structural UI engines",
+      link: "https://github.com/matthewhamilton3141/Retermina"
+    },
+    {
     type: "hackathon",
     category: "full-stack dev & blockchain",
     title: "baam",
@@ -45,11 +52,7 @@ const projects = [
     videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/portfolio.mp4",
     webmVideoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/portfolio.webm",
   },
-  {
-    type: "placeholder",
-    title: "more to come :)",
-    description: "currently engineering new ideas",
-  },
+
 ]
 
 type ViewMode = "list" | "grid"
