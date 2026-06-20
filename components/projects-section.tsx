@@ -27,7 +27,8 @@ const projects = [
       category: "currently building",
       title: "Retermina",
       description: "Retermina is a highly-customizable terminal wrapper built with Tauri & React. It features modular drag-and-drop workspaces, Iris (zero-token local macros & localhost tracker), and 5 structural UI engines",
-      link: "https://github.com/matthewhamilton3141/Retermina"
+      link: "https://github.com/matthewhamilton3141/Retermina",
+      liveUrl: "https://github.com/matthewhamilton3141/Retermina",
     },
     {
     type: "hackathon",

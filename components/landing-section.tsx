@@ -212,7 +212,7 @@ export function LandingSection() {
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
           >
-            <LogoSandbox logos={["/images/waterloologo.png", "/images/nvidialogo.png", "/images/jamhackslogo.png", "/images/bayernlogo.png", "/images/overwatchlogo.png", "/images/league.png", "images/typescript.png", "/images/rayquaza.png", "/images/retermina.png", "/images/claude.png" ]} />
+            <LogoSandbox logos={["/images/waterloologo.png", "/images/nvidialogo.png", "/images/jamhackslogo.png", "/images/bayernlogo.png", "/images/overwatchlogo.png", "/images/league.png", "/images/rayquaza.png", "/images/retermina.png", "/images/claude.png" ]} />
           </div>
         </div>
 
