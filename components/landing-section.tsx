@@ -11,7 +11,6 @@ export function LandingSection() {
   const [typedText, setTypedText] = useState("")
   const [showCursor, setShowCursor] = useState(true)
   const [typingDone, setTypingDone] = useState(false)
-  const [showSignature, setShowSignature] = useState(false)
   const [isNameHovered, setIsNameHovered] = useState(false)
   
   // Element reveal state
@@ -41,10 +40,6 @@ export function LandingSection() {
       } else {
         setShowCursor(false)
         setTypingDone(true)
-        // Show signature after typing completes
-        setTimeout(() => {
-          setShowSignature(true)
-        }, 400)
       }
     }
 
@@ -159,23 +154,6 @@ export function LandingSection() {
           >
             seeking spring '27 internship opportunities
           </p>
-
-          {/* Signature */}
-          <div
-            className={`mt-3 md:mt-5 transition-opacity duration-500 ${
-              showSignature ? "opacity-100" : "opacity-0"
-            }`}
-            aria-hidden="true"
-          >
-            <Image
-              src="/images/signature.svg" 
-              alt="" 
-              width={400}
-              height={130}
-              className="h-[105px] md:h-[130px] w-auto dark:invert dark:opacity-80"
-              style={{ filter: "var(--signature-filter, none)" }}
-            />
-          </div>
 
         </div> {/* END OF INNER WRAPPER */}
         

@@ -59,7 +59,7 @@ const projects = [
 type ViewMode = "list" | "grid"
 
 function isLivePhotoProject(project: any) {
-  return project.type !== "soon" && project.type !== "placeholder" && !project.useSignatureThumbnail
+  return project.type !== "soon" && project.type !== "placeholder"
 }
 
 export function ProjectsSection() {
@@ -276,14 +276,6 @@ function ProjectThumbnail({ project }: { project: any }) {
           </svg>
         </div>
         <p className="text-xs font-bold text-muted-foreground">{project.title}</p>
-      </div>
-    )
-  }
-
-  if (project.useSignatureThumbnail) {
-    return (
-      <div className="w-full h-full rounded-xl bg-muted/30 border border-border flex items-center justify-center p-8 select-none">
-        <Image src="/images/signature.svg" alt="Signature" width={300} height={100} className="w-auto h-[65%] object-contain dark:invert opacity-80" />
       </div>
     )
   }

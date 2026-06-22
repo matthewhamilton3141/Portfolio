@@ -80,6 +80,14 @@ const TRACKS: Track[] = [
     progressColor: "#E2E8F0"
   },
   {
+    title: "slow dancing in the dark",
+    artist: "joji",
+    src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/slowdancinginthedark.mp3",
+    coverUrl: "/images/ballads1.jpeg",
+    waveColor: "linear-gradient(to top, #CDB0AE, #CEC0C0)",
+    progressColor: "#E2E8F0"
+  },
+  {
     title: "cyanide",
     artist: "daniel caesar",
     src: "https://pub-ce086066003e4e1cad2011087e85618b.r2.dev/cyanide.mp3",
@@ -93,20 +101,17 @@ const TRACKS: Track[] = [
 // REUSABLE CONDITIONAL MARQUEE COMPONENT
 function ConditionalMarquee({ text, className }: { text: string; className: string }) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLSpanElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
 
   useEffect(() => {
     const container = containerRef.current
-    const textEl = textRef.current
-    if (!container || !textEl) return
+    if (!container) return
 
     const checkOverflow = () => {
-      setIsOverflowing(textEl.scrollWidth > container.offsetWidth)
+      setIsOverflowing(container.scrollWidth > container.offsetWidth)
     }
 
     checkOverflow()
-    // Re-check on window layout resizing
     window.addEventListener("resize", checkOverflow)
     return () => window.removeEventListener("resize", checkOverflow)
   }, [text])
@@ -114,7 +119,7 @@ function ConditionalMarquee({ text, className }: { text: string; className: stri
   return (
     <div ref={containerRef} className="w-full overflow-hidden relative whitespace-nowrap">
       <div className={`${isOverflowing ? "animate-marquee flex gap-8 w-max" : ""}`}>
-        <span ref={textRef} className={className}>
+        <span className={className}>
           {text}
         </span>
         {isOverflowing && (
