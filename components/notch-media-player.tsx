@@ -101,25 +101,31 @@ const TRACKS: Track[] = [
 // REUSABLE CONDITIONAL MARQUEE COMPONENT
 function ConditionalMarquee({ text, className }: { text: string; className: string }) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLSpanElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
 
   useEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    const textEl = textRef.current
+    if (!container || !textEl) return
 
     const checkOverflow = () => {
-      setIsOverflowing(container.scrollWidth > container.offsetWidth)
+      // Compare the natural text width against the container's available width
+      setIsOverflowing(textEl.scrollWidth > container.offsetWidth)
     }
 
     checkOverflow()
-    window.addEventListener("resize", checkOverflow)
-    return () => window.removeEventListener("resize", checkOverflow)
+
+    const observer = new ResizeObserver(checkOverflow)
+    observer.observe(container)
+
+    return () => observer.disconnect()
   }, [text])
 
   return (
     <div ref={containerRef} className="w-full overflow-hidden relative whitespace-nowrap">
       <div className={`${isOverflowing ? "animate-marquee flex gap-8 w-max" : ""}`}>
-        <span className={className}>
+        <span ref={textRef} className={className}>
           {text}
         </span>
         {isOverflowing && (
