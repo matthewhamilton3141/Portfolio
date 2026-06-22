@@ -101,17 +101,18 @@ const TRACKS: Track[] = [
 // REUSABLE CONDITIONAL MARQUEE COMPONENT
 function ConditionalMarquee({ text, className }: { text: string; className: string }) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLSpanElement>(null)
+  const measureRef = useRef<HTMLSpanElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
 
   useEffect(() => {
     const container = containerRef.current
-    const textEl = textRef.current
-    if (!container || !textEl) return
+    const measure = measureRef.current
+    if (!container || !measure) return
 
+    // measure.offsetWidth = natural text width (absolute, out of flow, unaffected by overflow:hidden)
+    // container.offsetWidth = available width from parent flex layout
     const checkOverflow = () => {
-      // Compare the natural text width against the container's available width
-      setIsOverflowing(textEl.scrollWidth > container.offsetWidth)
+      setIsOverflowing(measure.offsetWidth > container.offsetWidth)
     }
 
     checkOverflow()
@@ -124,14 +125,14 @@ function ConditionalMarquee({ text, className }: { text: string; className: stri
 
   return (
     <div ref={containerRef} className="w-full overflow-hidden relative whitespace-nowrap">
-      <div className={`${isOverflowing ? "animate-marquee flex gap-8 w-max" : ""}`}>
-        <span ref={textRef} className={className}>
-          {text}
-        </span>
+      {/* Invisible measurement span — always one copy of text, out of flow */}
+      <span ref={measureRef} className={`${className} absolute opacity-0 pointer-events-none`} aria-hidden="true">
+        {text}
+      </span>
+      <div className={isOverflowing ? "animate-marquee flex gap-8 w-max" : ""}>
+        <span className={className}>{text}</span>
         {isOverflowing && (
-          <span className={className} aria-hidden="true">
-            {text}
-          </span>
+          <span className={className} aria-hidden="true">{text}</span>
         )}
       </div>
     </div>
