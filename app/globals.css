@@ -152,18 +152,6 @@
   }
 }
 
-/* Custom cursor styles */
-.cursor-none,
-.cursor-none * {
-  cursor: none !important;
-}
-
-@media (pointer: coarse) {
-  .cursor-none,
-  .cursor-none * {
-    cursor: auto !important;
-  }
-}
 
 /* Animations */
 @keyframes blink {

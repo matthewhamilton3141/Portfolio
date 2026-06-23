@@ -1,3 +1,4 @@
+// retiring this lol
 // components/custom-cursor.tsx
 "use client"
 

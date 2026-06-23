@@ -19,7 +19,7 @@ export function Footer() {
       {/* Right: back to top */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="text-[11px] tracking-[0.1em] text-ink-muted hover:text-ink transition-colors duration-200 shrink-0 cursor-none"
+        className="text-[11px] tracking-[0.1em] text-ink-muted hover:text-ink transition-colors duration-200 shrink-0"
       >
         back to top ↑
       </button>

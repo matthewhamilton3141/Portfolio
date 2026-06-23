@@ -57,7 +57,7 @@ export function SideNav({ sections, scrollContainerRef }: SideNavProps) {
       {sections.map((section) => (
         <div
           key={section.id}
-          className="nav-dot-wrap flex items-center gap-0 cursor-none group"
+          className="nav-dot-wrap flex items-center gap-0 group"
           onClick={() => handleClick(section.id)}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") handleClick(section.id)

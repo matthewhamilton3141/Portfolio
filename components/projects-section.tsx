@@ -90,7 +90,7 @@ export function ProjectsSection() {
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
-              className={`px-4 py-1.5 rounded-full text-[10px] tracking-[0.12em] lowercase font-bold transition-all cursor-none ${
+              className={`px-4 py-1.5 rounded-full text-[10px] tracking-[0.12em] lowercase font-bold transition-all ${
                 viewMode === mode
                   ? "bg-card text-foreground shadow-sm border border-border/40"
                   : "text-muted-foreground hover:text-foreground"
@@ -137,7 +137,7 @@ export function ProjectsSection() {
                       href={project.logoLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center transition-transform hover:scale-110 cursor-none ml-1"
+                      className="inline-flex items-center justify-center transition-transform hover:scale-110 ml-1"
                       title="View Hackathon"
                     >
                       <Image src={project.logoSrc} alt="Hackathon Logo" width={20} height={20} className="object-contain" />
@@ -151,10 +151,10 @@ export function ProjectsSection() {
 
               <div className="flex items-center gap-6 mt-4 sm:mt-0 z-30">
                 {project.link && (
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline cursor-none">github repo &rarr;</a>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline">github repo &rarr;</a>
                 )}
                 {project.liveUrl && (
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline cursor-none">try &rarr;</a>
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline">try &rarr;</a>
                 )}
               </div>
             </div>
@@ -319,7 +319,7 @@ function ProjectCardDetails({ project }: { project: any }) {
             href={project.logoLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center transition-transform hover:scale-110 cursor-none"
+            className="inline-flex items-center justify-center transition-transform hover:scale-110"
             title="View Hackathon"
           >
             <Image src={project.logoSrc} alt="Hackathon Badge" width={18} height={18} className="object-contain" />
@@ -333,10 +333,10 @@ function ProjectCardDetails({ project }: { project: any }) {
 
       <div className="mt-auto pt-4 flex items-center gap-6">
         {project.link && (
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline transition-all duration-200 cursor-none">github repo&rarr;</a>
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground font-bold no-underline transition-all duration-200">github repo&rarr;</a>
         )}
         {project.liveUrl && (
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline transition-all duration-200 cursor-none">Try &rarr;</a>
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[11px] tracking-[0.15em] uppercase text-foreground hover:opacity-80 font-bold no-underline transition-all duration-200">Try &rarr;</a>
         )}
       </div>
     </div>

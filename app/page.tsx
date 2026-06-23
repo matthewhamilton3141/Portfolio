@@ -2,7 +2,6 @@
 "use client"
 
 import { useRef } from "react"
-import { CustomCursor } from "@/components/custom-cursor"
 import { TopBar } from "@/components/top-bar"
 import { SideNav } from "@/components/side-nav"
 import { LandingSection } from "@/components/landing-section"
@@ -21,10 +20,7 @@ export default function PortfolioPage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div className="cursor-none relative min-h-screen bg-background">
-      {/* Custom Cursor */}
-      <CustomCursor />
-
+    <div className="relative min-h-screen bg-background">
       {/* Top Bar - High stacking index */}
       <TopBar />
 

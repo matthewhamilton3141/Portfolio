@@ -113,7 +113,7 @@ export function ContactSection() {
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className="group flex items-center gap-3.5 no-underline cursor-none py-1 transition-transform duration-300 hover:scale-[1.03] pointer-events-auto"
+              className="group flex items-center gap-3.5 no-underline py-1 transition-transform duration-300 hover:scale-[1.03] pointer-events-auto"
             >
               <div className="text-ink-muted transition-colors duration-300 group-hover:text-accent-warm flex items-center justify-center">
                 {link.icon}

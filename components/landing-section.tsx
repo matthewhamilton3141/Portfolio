@@ -190,7 +190,7 @@ export function LandingSection() {
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
           >
-            <LogoSandbox logos={["/images/waterloologo.png", "/images/nvidialogo.png", "/images/jamhackslogo.png", "/images/bayernlogo.png", "/images/overwatchlogo.png", "/images/league.png", "/images/rayquaza.png", "/images/retermina.png", "/images/claude.png" ]} />
+            <LogoSandbox logos={["/images/waterloologo.png", "/images/nvidialogo.png", "/images/jamhackslogo.png", "/images/bayernlogo.png", "/images/overwatchlogo.png", "/images/league.png", "/images/rayquaza.png", "/images/retermina.png", "/images/claude.png", "/images/hk.png" ]} />
           </div>
         </div>
 
@@ -206,7 +206,7 @@ export function LandingSection() {
               href="https://uwaterloo.ca/future-students/programs/systems-design-engineering"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-2 py-0.5 rounded bg-accent/5 text-accent font-semibold border border-accent/10 transition-all duration-200 hover:bg-accent/15 hover:border-accent/30 cursor-none"
+              className="inline-block px-2 py-0.5 rounded bg-accent/5 text-accent font-semibold border border-accent/10 transition-all duration-200 hover:bg-accent/15 hover:border-accent/30"
             >
               systems design engineering @ uwaterloo
             </a>
@@ -234,7 +234,7 @@ export function LandingSection() {
         <div className="flex md:justify-start md:pl-[12vw] justify-center">
           <button
             onClick={() => scrollToSection("projects")}
-            className="flex flex-col items-center gap-2 pointer-events-auto cursor-none bg-transparent border-none p-0 group"
+            className="flex flex-col items-center gap-2 pointer-events-auto bg-transparent border-none p-0 group"
           >
             <span className="text-[10px] tracking-[0.18em] lowercase text-ink-muted group-hover:text-ink transition-colors duration-200">
               Projects
@@ -247,7 +247,7 @@ export function LandingSection() {
         <div className="flex md:justify-end md:pr-[8vw] justify-center mt-6 md:mt-0">
           <button
             onClick={() => scrollToSection("contact")}
-            className="flex flex-col items-center gap-2 pointer-events-auto cursor-none bg-transparent border-none p-0 group"
+            className="flex flex-col items-center gap-2 pointer-events-auto bg-transparent border-none p-0 group"
           >
             <span className="text-[10px] tracking-[0.18em] lowercase text-ink-muted group-hover:text-ink transition-colors duration-200">
               Contact

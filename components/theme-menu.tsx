@@ -70,7 +70,7 @@ export function ThemeMenu() {
             <button
               key={theme.id}
               onClick={() => handleThemeChange(theme)}
-              className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-lg text-xs font-semibold tracking-wide text-left transition-colors cursor-none ${
+              className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-lg text-xs font-semibold tracking-wide text-left transition-colors ${
                 activeTheme.id === theme.id
                   ? "bg-blush/60 text-ink"
                   : "text-ink-soft hover:bg-blush/30 hover:text-ink"
@@ -88,7 +88,7 @@ export function ThemeMenu() {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-12 h-12 rounded-full bg-cream border border-border/80 shadow-md hover:shadow-lg flex items-center justify-center text-ink-soft hover:text-ink transition-all active:scale-95 cursor-none"
+        className="w-12 h-12 rounded-full bg-cream border border-border/80 shadow-md hover:shadow-lg flex items-center justify-center text-ink-soft hover:text-ink transition-all active:scale-95"
         aria-label="Toggle art palette selector"
       >
         <svg 
