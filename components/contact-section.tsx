@@ -99,6 +99,9 @@ export function ContactSection() {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
+        <h2 className="text-[clamp(28px,5vw,52px)] font-black tracking-tight text-ink leading-[1.05] mb-4 text-center">
+          let's build something.
+        </h2>
         <p className="text-[11px] tracking-[0.25em] lowercase text-ink-muted mb-10 font-sans">
           get in touch
         </p>

@@ -215,7 +215,7 @@ export function LandingSection() {
             {"originally from toronto, now based in waterloo for fall '26 to winter '27. i enjoy exploring nature, video games, and trying new things."}
           </p>
           <div className="flex flex-wrap gap-2 mt-5">
-            {["TypeScript", "Python", "JavaScript", "React"].map((tag) => (
+            {["TypeScript", "Python", "React", "Next.js", "Tauri"].map((tag) => (
               <span
                 key={tag}
                 className="text-[11px] tracking-[0.12em] lowercase py-2 px-4 border border-border rounded-full text-ink-soft bg-surface transition-colors duration-300"
@@ -451,6 +451,9 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
 
         ctx.save()
         ctx.globalAlpha = item.isDragging ? 1.0 : 0.9
+        ctx.shadowColor = "rgba(0,0,0,0.18)"
+        ctx.shadowBlur = 10
+        ctx.shadowOffsetY = 3
         ctx.drawImage(item.img, item.x, item.y, item.width, item.height)
         ctx.restore()
       })

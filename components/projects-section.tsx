@@ -28,7 +28,8 @@ const projects = [
       title: "Retermina",
       description: "Retermina is a highly-customizable terminal wrapper built with Tauri & React. It features modular drag-and-drop workspaces, Iris (zero-token local macros & localhost tracker), and 5 structural UI engines",
       link: "https://github.com/matthewhamilton3141/Retermina",
-      liveUrl: "https://github.com/matthewhamilton3141/Retermina",
+      liveUrl: "https://retermina.com/",
+      thumbnailSrc: "/images/reterminapreview1.png",
     },
     {
     type: "hackathon",
@@ -268,14 +269,25 @@ function ProjectThumbnail({ project }: { project: any }) {
   }
 
   if (project.type === "placeholder") {
-    return (
-      <div className="w-full h-full rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-6 h-6 mb-3 opacity-40 animate-spin text-muted-foreground">
-          <svg className="stroke-current fill-none" strokeWidth="1.8" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" strokeDasharray="16 12" strokeLinecap="round" />
-          </svg>
+    if (project.thumbnailSrc) {
+      return (
+        <div className="w-full h-full rounded-xl overflow-hidden relative">
+          <Image src={project.thumbnailSrc} alt={project.title} fill className="object-cover object-top" />
         </div>
-        <p className="text-xs font-bold text-muted-foreground">{project.title}</p>
+      )
+    }
+    return (
+      <div className="w-full h-full rounded-xl bg-muted/30 border border-border/60 flex flex-col items-center justify-center gap-3 p-6 text-center relative overflow-hidden">
+        <div className="relative w-14 h-14 flex-shrink-0">
+          <Image src="/images/retermina.png" alt="Retermina" fill className="object-contain" />
+        </div>
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-sm font-bold text-foreground tracking-tight">{project.title}</p>
+          <span className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.12em] uppercase font-semibold text-green-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            live
+          </span>
+        </div>
       </div>
     )
   }

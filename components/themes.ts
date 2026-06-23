@@ -11,8 +11,8 @@ export const THEME_OPTIONS: ThemeOption[] = [
   {
     id: "zinc",
     name: "black and white",
-    className: "theme-stark-mono", // Forced black & white initial class
-    previewDot: "#1A1714" 
+    className: "theme-stark-mono",
+    previewDot: "#1A1714"
   },
   {
     id: "editorial",
@@ -31,5 +31,17 @@ export const THEME_OPTIONS: ThemeOption[] = [
     name: "green",
     className: "theme-midnight-mint",
     previewDot: "#52B788"
-  }
+  },
+  {
+    id: "lavender",
+    name: "purple",
+    className: "theme-lavender-dusk",
+    previewDot: "#7C5CFC"
+  },
+  {
+    id: "rose",
+    name: "rose",
+    className: "theme-cherry-blossom",
+    previewDot: "#E05870"
+  },
 ]

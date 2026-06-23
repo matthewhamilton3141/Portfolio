@@ -225,7 +225,7 @@ export function Poro({ containerRef }: PoroProps) {
       <Canvas
         camera={{ position: [0, 0, 4.5], fov: 38 }}
         gl={{ antialias: true, alpha: true }}
-        style={{ background: "transparent", width: "100%", height: "100%" }}
+        style={{ background: "transparent", width: "100%", height: "100%", filter: "var(--poro-filter)" }}
       >
         <ambientLight intensity={2} />
         <directionalLight position={[3, 5, 3]} intensity={1.5} />

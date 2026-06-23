@@ -140,12 +140,17 @@ function ConditionalMarquee({ text, className }: { text: string; className: stri
 }
 
 export function NotchMediaPlayer() {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsExpanded(false), 2000)
+    return () => clearTimeout(timer)
+  }, [])
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
@@ -154,6 +159,7 @@ export function NotchMediaPlayer() {
   const barRefs = useRef<HTMLDivElement[]>([])
   const playerRef = useRef<HTMLDivElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const skipRef = useRef(false)
 
   const currentTrack = TRACKS[currentTrackIndex]
   const BAR_COUNT = 9
@@ -224,13 +230,17 @@ export function NotchMediaPlayer() {
 
   useEffect(() => {
     if (!audioRef.current) return
-    const wasPlaying = isPlaying
+    const shouldPlay = isPlaying || skipRef.current
+    skipRef.current = false
     audioRef.current.src = currentTrack.src
     audioRef.current.load()
 
-    if (wasPlaying) {
+    if (shouldPlay) {
       audioRef.current.play()
-        .then(() => initAudioContext())
+        .then(() => {
+          setIsPlaying(true)
+          initAudioContext()
+        })
         .catch(() => setIsPlaying(false))
     } else {
       setCurrentTime(0)
@@ -323,12 +333,14 @@ export function NotchMediaPlayer() {
 
   const handleNext = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation()
+    skipRef.current = true
     setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length)
     resetInactivityTimer()
   }
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation()
+    skipRef.current = true
     setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length)
     resetInactivityTimer()
   }

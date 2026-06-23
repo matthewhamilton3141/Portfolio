@@ -31,6 +31,7 @@
   --selection-bg: rgba(160,82,45,0.18);
   --selection-color: #3A1F10;
   --signature-filter: none;
+  --poro-filter: drop-shadow(0 2px 16px rgba(0,0,0,0.22)) drop-shadow(0 1px 4px rgba(0,0,0,0.12));
 
   /* Shadcn compatibility */
   --background: var(--warm-white);
@@ -72,6 +73,7 @@
   --selection-bg: rgba(212,168,130,0.25);
   --selection-color: #F0EBE3;
   --signature-filter: invert(1) brightness(0.85);
+  --poro-filter: none;
 
   /* Shadcn compatibility */
   --background: var(--warm-white);
@@ -228,6 +230,16 @@
   animation: scrollPulse 2s ease-in-out infinite;
 }
 
+@keyframes nudgeRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+.animate-nudge-right {
+  animation: nudgeRight 0.9s ease-in-out infinite;
+  display: inline-block;
+}
+
 /* Scroll snap */
 .scroll-snap-y {
   scroll-snap-type: y mandatory;
@@ -365,3 +377,60 @@ ellipse.sig-path {
   --border: #1B2924;
   --blush: #1B2924;
 }
+
+/* 5. Lavender Dusk */
+:root.theme-lavender-dusk {
+  --warm-white: #F7F5FF;
+  --cream: #EDE8FF;
+  --ink: #1E1530;
+  --ink-soft: #4A3B6A;
+  --ink-muted: #8B7BA8;
+  --accent: #7C5CFC;
+  --accent-warm: #6B3FA0;
+  --border: #D8D0F0;
+  --blush: #E8E0FF;
+  --surface: #F7F5FF;
+  --surface-alt: #EDE8FF;
+}
+.dark.theme-lavender-dusk {
+  --warm-white: #0E0B16;
+  --cream: #161028;
+  --ink: #EDE8FF;
+  --ink-soft: #B8A8D8;
+  --ink-muted: #5A4A78;
+  --accent: #A78BFA;
+  --accent-warm: #7C5CFC;
+  --border: #2A1F45;
+  --blush: #1E1535;
+  --surface: #0E0B16;
+  --surface-alt: #161028;
+}
+
+/* 6. Cherry Blossom */
+:root.theme-cherry-blossom {
+  --warm-white: #FFF7F8;
+  --cream: #FFE8EC;
+  --ink: #2D1018;
+  --ink-soft: #6B3040;
+  --ink-muted: #A87080;
+  --accent: #E05870;
+  --accent-warm: #C03050;
+  --border: #F0C8D0;
+  --blush: #FFD8E0;
+  --surface: #FFF7F8;
+  --surface-alt: #FFE8EC;
+}
+.dark.theme-cherry-blossom {
+  --warm-white: #130810;
+  --cream: #1E1018;
+  --ink: #FFE8EC;
+  --ink-soft: #D8A8B8;
+  --ink-muted: #6A3848;
+  --accent: #F08098;
+  --accent-warm: #E05870;
+  --border: #2E1020;
+  --blush: #2A1020;
+  --surface: #130810;
+  --surface-alt: #1E1018;
+}
+

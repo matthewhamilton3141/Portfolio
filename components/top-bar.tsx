@@ -54,6 +54,26 @@ export function TopBar() {
           }
         `}
       >
+        {/* Retermina */}
+        <div className="flex items-center gap-2 relative z-[100000]">
+          <span className="text-[11px] font-semibold tracking-wide text-ink-muted flex items-center gap-1 select-none">
+            try now <span className="animate-nudge-right">→</span>
+          </span>
+          <a
+            href="https://retermina.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="topbar-icon w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft no-underline transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none shrink-0"
+            aria-label="Retermina"
+            title="Retermina"
+          >
+            <span className="text-[12px] font-bold font-mono leading-none tracking-[0em]" style={{ transform: "translateX(-2px) translateY(-1px)", display: "inline-block" }}>
+              <span style={{ display: "inline-block", transform: "scaleX(0.6)", transformOrigin: "center" }}>{'>'}</span>
+              {'_'}
+            </span>
+          </a>
+        </div>
+
         {/* LinkedIn */}
         <a
           href="https://linkedin.com/in/matthewhamilton3141"

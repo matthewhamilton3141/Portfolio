@@ -16,9 +16,13 @@ export function Footer() {
         matthew hamilton · 陳文飛 · built with React, Next.js & TypeScript
       </span>
 
-      {/* Middle & Right Container */}
-      <div className="flex-1 flex items-center justify-between ml-12 md:ml-24 text-[11px] tracking-[0.1em] text-ink-muted">
-      </div>
+      {/* Right: back to top */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="text-[11px] tracking-[0.1em] text-ink-muted hover:text-ink transition-colors duration-200 shrink-0 cursor-none"
+      >
+        back to top ↑
+      </button>
     </footer>
   );
 }
