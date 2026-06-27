@@ -1,7 +1,4 @@
 // app/page.tsx
-"use client"
-
-import { useRef } from "react"
 import { TopBar } from "@/components/top-bar"
 import { SideNav } from "@/components/side-nav"
 import { LandingSection } from "@/components/landing-section"
@@ -17,8 +14,6 @@ const sections = [
 ]
 
 export default function PortfolioPage() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-
   return (
     <div className="relative min-h-screen bg-background">
       {/* Top Bar - High stacking index */}
@@ -28,16 +23,11 @@ export default function PortfolioPage() {
       <NotchMediaPlayer />
 
       {/* Side Navigation */}
-      <SideNav sections={sections} scrollContainerRef={scrollContainerRef} />
+      <SideNav sections={sections} />
 
-      {/* FIX: Dropped h-screen and scroll-snap-y traps. 
-        Changing this to h-auto and allowing natural document overflow ensures your 
-        expanding multi-row project grid can stretch down the page seamlessly.
-      */}
-      <div
-        ref={scrollContainerRef}
-        className="relative z-0 h-auto w-full overflow-y-visible scroll-smooth"
-      >
+      {/* The document scrolls naturally (h-auto, natural overflow) so the
+        expanding multi-row project grid can stretch down the page seamlessly. */}
+      <div className="relative z-0 h-auto w-full overflow-y-visible scroll-smooth">
         <LandingSection />
         <ProjectsSection />
         <ContactSection />

@@ -26,7 +26,7 @@ const projects = [
       type: "placeholder",
       category: "currently building",
       title: "Retermina",
-      description: "Retermina is a highly-customizable terminal wrapper built with Tauri & React. It features modular drag-and-drop workspaces, Iris (zero-token local macros & localhost tracker), and 5 structural UI engines",
+      description: "A customizable terminal workspace built on Tauri v2 with a Rust backend driving native PTY shells — fully local, with no cloud, token limits, or subscription. Seven draggable panels (split terminals, syntax-highlighted code, explorer, live project-wide git diff, localhost tracker, native preview window, and an embedded Claude Code CLI with per-project token tracking) arrange freely on a react-grid-layout grid. Iris, a tokenless context-aware command bar, surfaces git/npm/shell macros gated on live repo state, while five structural theme engines and portable Loom presets re-skin the whole app instantly.",
       link: "https://github.com/matthewhamilton3141/Retermina",
       liveUrl: "https://retermina.com/",
       thumbnailSrc: "/images/reterminapreview1.png",
@@ -261,7 +261,7 @@ function ProjectThumbnail({ project }: { project: any }) {
     return (
       <div className="w-full h-full rounded-xl bg-muted/40 border border-dashed border-border flex flex-col items-center justify-center p-6 select-none">
         <div className="relative w-16 h-16 mb-3">
-          <Image src={project.logoSrc} alt="Logo" fill className="object-contain dark:invert-[0.15] opacity-60 animate-pulse" />
+          <Image src={project.logoSrc} alt="Logo" fill sizes="64px" className="object-contain dark:invert-[0.15] opacity-60 animate-pulse" />
         </div>
         <span className="text-[10px] tracking-[0.18em] uppercase text-muted-foreground font-semibold">Coming Soon</span>
       </div>
@@ -272,14 +272,14 @@ function ProjectThumbnail({ project }: { project: any }) {
     if (project.thumbnailSrc) {
       return (
         <div className="w-full h-full rounded-xl overflow-hidden relative">
-          <Image src={project.thumbnailSrc} alt={project.title} fill className="object-cover object-top" />
+          <Image src={project.thumbnailSrc} alt={project.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 420px" className="object-cover object-top" />
         </div>
       )
     }
     return (
       <div className="w-full h-full rounded-xl bg-muted/30 border border-border/60 flex flex-col items-center justify-center gap-3 p-6 text-center relative overflow-hidden">
         <div className="relative w-14 h-14 flex-shrink-0">
-          <Image src="/images/retermina.png" alt="Retermina" fill className="object-contain" />
+          <Image src="/images/retermina.png" alt="Retermina" fill sizes="56px" className="object-contain" />
         </div>
         <div className="flex flex-col items-center gap-1">
           <p className="text-sm font-bold text-foreground tracking-tight">{project.title}</p>

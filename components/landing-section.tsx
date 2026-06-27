@@ -177,10 +177,11 @@ export function LandingSection() {
             }}
           >
             <LivePhoto
-              thumbnailSrc="/images/thumbnailSrc.jpg"
+              thumbnailSrc="/images/thumbnailSrc3.jpg"
               videoSrc="https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/videoSrc.mp4"
               webmVideoSrc="https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/videoSrc.webm"
               alt="live photo"
+              priority
             />
           </div>
 

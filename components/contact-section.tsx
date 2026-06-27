@@ -1,7 +1,11 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Poro } from "./poro"
+import dynamic from "next/dynamic"
+
+// Three.js + react-three-fiber + drei are heavy (~600KB+). Load them only on the
+// client, and only once the contact section actually scrolls into view.
+const Poro = dynamic(() => import("./poro").then((m) => m.Poro), { ssr: false })
 
 const modernLinks = [
   { 
@@ -88,9 +92,11 @@ export function ContactSection() {
       ref={sectionRef}
       className="min-h-screen scroll-snap-start relative bg-warm-white transition-colors duration-500 overflow-hidden"
     >
-      {/* Poro fills entire section, listens to mouse on the section itself */}
+      {/* Poro fills entire section, listens to mouse on the section itself.
+          Mounted lazily once the section is visible so the 3D bundle never
+          blocks the initial page load. */}
       <div className="absolute inset-0 z-0">
-        <Poro containerRef={sectionRef} />
+        {isVisible && <Poro containerRef={sectionRef} />}
       </div>
 
       {/* Links float centered on top */}

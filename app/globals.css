@@ -95,11 +95,11 @@
 }
 
 @theme inline {
-  --font-sans: 'DM Sans', 'Geist', sans-serif;
+  --font-sans: var(--font-dm-sans), var(--font-geist-sans), sans-serif;
   --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-chinese: 'Noto Serif SC', serif;
-  --font-mono: 'Geist Mono', monospace;
+  --font-mono: var(--font-geist-mono), monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

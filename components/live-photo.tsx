@@ -9,14 +9,17 @@ interface LivePhotoProps {
   webmVideoSrc?: string
   alt: string
   hoverScale?: number
+  /** Set on above-the-fold instances to prioritise the LCP image. */
+  priority?: boolean
 }
 
 export function LivePhoto({
   thumbnailSrc,
   videoSrc,
-  webmVideoSrc = "/videos/videoSrc.webm",
+  webmVideoSrc,
   alt,
   hoverScale = 1.2,
+  priority = false,
 }: LivePhotoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -79,7 +82,7 @@ export function LivePhoto({
           WebkitMaskImage: "-webkit-radial-gradient(white, black)"
         }}
       >
-        <source src={webmVideoSrc} type="video/webm" />
+        {webmVideoSrc && <source src={webmVideoSrc} type="video/webm" />}
         <source src={videoSrc} type="video/mp4" />
       </video>
 
@@ -88,6 +91,8 @@ export function LivePhoto({
         src={thumbnailSrc}
         alt={alt}
         fill
+        sizes="(max-width: 768px) 200px, 240px"
+        priority={priority}
         className="object-cover block"
         style={{
           opacity: isHovered ? 0 : 1,

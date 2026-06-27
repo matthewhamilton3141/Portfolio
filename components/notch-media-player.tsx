@@ -388,7 +388,7 @@ export function NotchMediaPlayer() {
                 <div className="flex items-center gap-2 overflow-hidden max-w-[125px]">
 <div className="relative w-5 h-5 rounded-[5px] overflow-hidden flex-shrink-0 border border-white/5">
                     {currentTrack.coverUrl ? (
-                      <Image src={currentTrack.coverUrl} alt="" fill className="object-cover" />
+                      <Image src={currentTrack.coverUrl} alt="" fill sizes="48px" className="object-cover" />
                     ) : (
                       <Music className="w-3 h-3 text-neutral-400 m-auto" />
                     )}
@@ -416,7 +416,7 @@ export function NotchMediaPlayer() {
             ) : (
               <div className="flex items-center w-full h-full justify-start pl-0.5">
                 <div className="relative w-5 h-5 rounded-[5px] overflow-hidden border border-white/10 flex-shrink-0">
-                  {currentTrack.coverUrl ? (<Image src={currentTrack.coverUrl} alt="" fill className="object-cover" />
+                  {currentTrack.coverUrl ? (<Image src={currentTrack.coverUrl} alt="" fill sizes="48px" className="object-cover" />
                     
                   ) : (
                     <Music className="w-3 h-3 text-neutral-400 m-auto" />
@@ -442,7 +442,7 @@ export function NotchMediaPlayer() {
                   />
                   <div className="relative w-full h-full rounded-[10px] bg-neutral-900 border border-white/10 overflow-hidden shadow-md z-10">
                     {currentTrack.coverUrl ? (
-                      <Image src={currentTrack.coverUrl} alt="" fill className="object-cover" />
+                      <Image src={currentTrack.coverUrl} alt="" fill sizes="48px" className="object-cover" />
                     ) : (
                       <Music className="w-5 h-5 text-neutral-400 m-auto" />
                     )}

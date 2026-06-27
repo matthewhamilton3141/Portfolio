@@ -1,10 +1,4 @@
-import React from 'react';
-
-interface InspoItem {
-  name: string;
-  url: string;
-  logoPath: string;
-}
+"use client"
 
 export function Footer() {
   return (

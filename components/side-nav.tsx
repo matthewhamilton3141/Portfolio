@@ -5,10 +5,9 @@ import { useEffect, useState } from "react"
 
 interface SideNavProps {
   sections: { id: string; label: string }[]
-  scrollContainerRef: React.RefObject<HTMLDivElement | null>
 }
 
-export function SideNav({ sections, scrollContainerRef }: SideNavProps) {
+export function SideNav({ sections }: SideNavProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id || "")
 
   useEffect(() => {
