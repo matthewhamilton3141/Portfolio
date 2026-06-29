@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://matthewhamilton.dev/images/icon.png", // Make sure to save a screenshot as og-preview.png in public/images/
+        url: "https://matthewhamilton.dev/images/og-card.png",
         width: 1200,
         height: 630,
         alt: "swe, systems design engineering @ uwaterloo",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "matthew h",
     description: "swe, systems design engineering @ uwaterloo",
-    images: ["https://matthewhamilton.dev/images/icon.png"],
+    images: ["https://matthewhamilton.dev/images/og-card.png"],
   },
 }
 

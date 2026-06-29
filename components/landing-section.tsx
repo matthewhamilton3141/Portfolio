@@ -6,6 +6,21 @@ import { LivePhoto } from "./live-photo"
 import Image from "next/image"
 import React from "react"
 
+// Stable reference so <LogoSandbox> never re-mounts on LandingSection re-renders
+// (the typewriter effect triggers many) — lets React.memo use a cheap identity check.
+const LANDING_LOGOS = [
+  "/images/waterloologo.png",
+  "/images/nvidialogo.png",
+  "/images/jamhackslogo.png",
+  "/images/bayernlogo.png",
+  "/images/overwatchlogo.png",
+  "/images/league.png",
+  "/images/rayquaza.png",
+  "/images/retermina.png",
+  "/images/claude.png",
+  "/images/hk.png",
+]
+
 export function LandingSection() {
   // Typewriter state
   const [typedText, setTypedText] = useState("")
@@ -191,7 +206,7 @@ export function LandingSection() {
               showElements.photo ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
             }`}
           >
-            <LogoSandbox logos={["/images/waterloologo.png", "/images/nvidialogo.png", "/images/jamhackslogo.png", "/images/bayernlogo.png", "/images/overwatchlogo.png", "/images/league.png", "/images/rayquaza.png", "/images/retermina.png", "/images/claude.png", "/images/hk.png" ]} />
+            <LogoSandbox logos={LANDING_LOGOS} />
           </div>
         </div>
 
@@ -357,7 +372,27 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
     })
     itemsRef.current = loadedItems
 
-    let animationFrameId: number
+    // Keep the O(n²) physics + canvas redraw loop idle whenever the sandbox is
+    // scrolled out of view or the tab is backgrounded — otherwise it burns CPU
+    // and battery for the entire time the page stays open.
+    let animationFrameId: number | null = null
+    let onScreen = true
+    let pageVisible = !document.hidden
+
+    const shouldRun = () => onScreen && pageVisible
+
+    const start = () => {
+      if (animationFrameId === null && shouldRun()) {
+        animationFrameId = requestAnimationFrame(updatePhysics)
+      }
+    }
+
+    const stop = () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId)
+        animationFrameId = null
+      }
+    }
 
     const updatePhysics = () => {
       ctx.clearRect(0, 0, containerWidth, containerHeight)
@@ -459,10 +494,27 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
         ctx.restore()
       })
 
-      animationFrameId = requestAnimationFrame(updatePhysics)
+      animationFrameId = shouldRun() ? requestAnimationFrame(updatePhysics) : null
     }
 
-    animationFrameId = requestAnimationFrame(updatePhysics)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting
+        if (onScreen) start()
+        else stop()
+      },
+      { threshold: 0 }
+    )
+    observer.observe(canvas)
+
+    const handleVisibility = () => {
+      pageVisible = !document.hidden
+      if (pageVisible) start()
+      else stop()
+    }
+    document.addEventListener("visibilitychange", handleVisibility)
+
+    start()
 
     const getCanvasMousePos = (e: MouseEvent) => {
       const currentRect = canvas.getBoundingClientRect()
@@ -511,7 +563,9 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
     window.addEventListener("mouseup", handleMouseUp)
 
     return () => {
-      cancelAnimationFrame(animationFrameId)
+      stop()
+      observer.disconnect()
+      document.removeEventListener("visibilitychange", handleVisibility)
       canvas.removeEventListener("mousedown", handleMouseDown)
       window.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("mouseup", handleMouseUp)
@@ -525,6 +579,4 @@ export const LogoSandbox = React.memo(function LogoSandbox({ logos }: { logos: s
       style={{ cursor: 'grab' }}
     />
   )
-}, (prevProps, nextProps) => {
-  return JSON.stringify(prevProps.logos) === JSON.stringify(nextProps.logos)
 })

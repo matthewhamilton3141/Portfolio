@@ -29,7 +29,7 @@ const projects = [
       description: "A customizable terminal workspace built on Tauri v2 with a Rust backend driving native PTY shells — fully local, with no cloud, token limits, or subscription. Seven draggable panels (split terminals, syntax-highlighted code, explorer, live project-wide git diff, localhost tracker, native preview window, and an embedded Claude Code CLI with per-project token tracking) arrange freely on a react-grid-layout grid. Iris, a tokenless context-aware command bar, surfaces git/npm/shell macros gated on live repo state, while five structural theme engines and portable Loom presets re-skin the whole app instantly.",
       link: "https://github.com/matthewhamilton3141/Retermina",
       liveUrl: "https://retermina.com/",
-      thumbnailSrc: "/images/reterminapreview1.png",
+      thumbnailSrc: "/images/reterminapreview.png",
     },
     {
     type: "hackathon",
