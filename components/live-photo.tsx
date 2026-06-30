@@ -9,6 +9,8 @@ interface LivePhotoProps {
   webmVideoSrc?: string
   alt: string
   hoverScale?: number
+  /** CSS object-position for the video/image crop (e.g. "left", "center"). */
+  objectPosition?: string
   /** Set on above-the-fold instances to prioritise the LCP image. */
   priority?: boolean
 }
@@ -19,6 +21,7 @@ export function LivePhoto({
   webmVideoSrc,
   alt,
   hoverScale = 1.2,
+  objectPosition = "center",
   priority = false,
 }: LivePhotoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -77,6 +80,7 @@ export function LivePhoto({
         style={{
           opacity: isHovered ? 1 : 0,
           zIndex: isHovered ? 20 : 10,
+          objectPosition,
           transition: "opacity 0.25s ease-in-out",
           borderRadius: "inherit",
           WebkitMaskImage: "-webkit-radial-gradient(white, black)"

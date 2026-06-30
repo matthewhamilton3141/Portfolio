@@ -32,6 +32,16 @@ const projects = [
       thumbnailSrc: "/images/reterminapreview.png",
     },
     {
+      type: "project",
+      category: "currently building",
+      title: "Iris-NL",
+      description: "Building an open-source TypeScript library that turns plain English into shell commands for terminal tools. Provider-agnostic backend (NVIDIA NIM / local Ollama / TensorRT-LLM) with a built-in safety layer and test suite. Designed to plug into my Retermina terminal app, with a benchmarking harness already in place to measure and optimize a local TensorRT-LLM model on consumer GPU hardware.",
+      link: "https://github.com/matthewhamilton3141/iris-nl",
+      thumbnailSrc: "/images/iris-nl.png",
+      videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/iris-nl.mp4",
+      objectPosition: "left"
+    },
+    {
     type: "hackathon",
     category: "full-stack dev & blockchain",
     title: "baam",
@@ -226,6 +236,7 @@ function FloatingHoverPreview({ project }: { project: any }) {
         playsInline
         crossOrigin="anonymous"
         className="w-full h-full object-cover rounded-xl"
+        style={{ objectPosition: project.objectPosition || "center" }}
       >
         {targetWebm && <source src={targetWebm} type="video/webm" />}
         <source src={targetVideo} type="video/mp4" />
@@ -298,6 +309,7 @@ function ProjectThumbnail({ project }: { project: any }) {
         thumbnailSrc={project.thumbnailSrc || ""}
         videoSrc={project.videoSrc || ""}
         webmVideoSrc={project.webmVideoSrc || ""}
+        objectPosition={project.objectPosition || "center"}
         alt={project.title}
       />
     </div>
