@@ -67,6 +67,7 @@ export default function RootLayout({
           {/* Global UI Components */}
           <ThemeMenu />
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

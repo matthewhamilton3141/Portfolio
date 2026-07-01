@@ -27,6 +27,10 @@ export function LandingSection() {
   const [showCursor, setShowCursor] = useState(true)
   const [typingDone, setTypingDone] = useState(false)
   const [isNameHovered, setIsNameHovered] = useState(false)
+
+  // Scroll-linked fade for the right panel content
+  const sectionRef = useRef<HTMLElement>(null)
+  const rightFadeRef = useRef<HTMLDivElement>(null)
   
   // Element reveal state
   const [showElements, setShowElements] = useState({
@@ -40,42 +44,84 @@ export function LandingSection() {
   
   const fullName = "MATTHEW HAMILTON"
   const chineseName = "陳文飛"
-  const indexRef = useRef(0)
 
   // Typewriter effect
   useEffect(() => {
     const typeSpeed = 80
     const startDelay = 300
 
+    let index = 0
+    let timeoutId: ReturnType<typeof setTimeout>
+
     const typeNext = () => {
-      if (indexRef.current <= fullName.length) {
-        setTypedText(fullName.slice(0, indexRef.current))
-        indexRef.current++
-        setTimeout(typeNext, typeSpeed + (Math.random() * 30 - 15))
+      if (index <= fullName.length) {
+        setTypedText(fullName.slice(0, index))
+        index++
+        timeoutId = setTimeout(typeNext, typeSpeed + (Math.random() * 30 - 15))
       } else {
         setShowCursor(false)
         setTypingDone(true)
       }
     }
 
-    setTimeout(typeNext, startDelay)
+    timeoutId = setTimeout(typeNext, startDelay)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   // Stagger other elements after typing starts
   useEffect(() => {
-    setTimeout(() => setShowElements((s) => ({ ...s, eyebrow: true })), 100)
-    setTimeout(() => setShowElements((s) => ({ ...s, photo: true })), 800)
-    setTimeout(() => setShowElements((s) => ({ ...s, bio: true })), 1000)
+    const timeouts = [
+      setTimeout(() => setShowElements((s) => ({ ...s, eyebrow: true })), 100),
+      setTimeout(() => setShowElements((s) => ({ ...s, photo: true })), 800),
+      setTimeout(() => setShowElements((s) => ({ ...s, bio: true })), 1000),
+    ]
+    return () => timeouts.forEach(clearTimeout)
   }, [])
 
   // Show tagline and stagger scroll hints sequentially after typing is done
   useEffect(() => {
-    if (typingDone) {
-      setTimeout(() => setShowElements((s) => ({ ...s, tagline: true })), 200)
-      setTimeout(() => setShowElements((s) => ({ ...s, projectsHint: true })), 2800)
-      setTimeout(() => setShowElements((s) => ({ ...s, contactHint: true })), 2950)
-    }
+    if (!typingDone) return
+    const timeouts = [
+      setTimeout(() => setShowElements((s) => ({ ...s, tagline: true })), 200),
+      setTimeout(() => setShowElements((s) => ({ ...s, projectsHint: true })), 2800),
+      setTimeout(() => setShowElements((s) => ({ ...s, contactHint: true })), 2950),
+    ]
+    return () => timeouts.forEach(clearTimeout)
   }, [typingDone])
+
+  // Fade the right panel content out as the section scrolls off toward projects.
+  // Writes styles directly (no state) so scrolling never re-renders the section.
+  useEffect(() => {
+    const section = sectionRef.current
+    const target = rightFadeRef.current
+    if (!section || !target) return
+
+    let ticking = false
+
+    const update = () => {
+      ticking = false
+      const rect = section.getBoundingClientRect()
+      const scrolled = Math.max(0, -rect.top)
+      // Parallax: the block scrolls at ~60% speed, so it lags behind and drifts
+      // down past the section edge into the projects section while fading out.
+      const progress = Math.min(scrolled / (rect.height * 0.75), 1)
+      target.style.opacity = `${1 - progress}`
+      target.style.transform = `translateY(${scrolled * 0.4}px)`
+      // Never block clicks on the projects UI underneath once it starts leaving
+      target.style.pointerEvents = progress > 0.05 ? "none" : ""
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    }
+
+    update()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   const scrollToSection = (id: string) => {
     const target = document.getElementById(id)
@@ -85,7 +131,10 @@ export function LandingSection() {
   }
 
   return (
-    <section id="landing" className="min-h-screen md:h-screen scroll-snap-start grid grid-cols-1 md:grid-cols-2 bg-warm-white transition-colors duration-500 overflow-hidden relative">
+    // overflow-x-clip (not overflow-hidden) + z-[5]: vertical overflow stays visible
+    // and paints above the projects section, so the parallax block can hang past
+    // the section edge instead of being clipped.
+    <section ref={sectionRef} id="landing" className="min-h-dvh md:h-screen scroll-snap-start grid grid-cols-1 md:grid-cols-2 bg-warm-white transition-colors duration-500 overflow-x-clip relative z-[5]">
       {/* Divider line between panels */}
       <div className="panel-divider absolute left-1/2 top-[15%] bottom-[15%] w-px bg-border z-[2] pointer-events-none hidden md:block" />
 
@@ -175,8 +224,11 @@ export function LandingSection() {
       </div>
 
       {/* Right panel */}
-      <div className="landing-right relative flex flex-col justify-center px-[8vw] py-10 md:px-[5vw] md:py-[80px] md:pr-[8vw] bg-cream transition-colors duration-500 overflow-y-auto overflow-x-hidden">
-        
+      <div className="landing-right relative flex flex-col justify-center px-[8vw] py-10 md:px-[5vw] md:py-[80px] md:pr-[8vw] bg-cream transition-colors duration-500 overflow-x-clip">
+
+        {/* Scroll-fade wrapper: content fades + drifts up as you scroll into projects */}
+        <div ref={rightFadeRef} className="will-change-[opacity,transform]">
+
         {/* Container for Photo + Interactive Logo Sandbox */}
         <div className="flex flex-row items-stretch gap-8 mb-8 w-full max-w-[640px]">
           
@@ -241,6 +293,28 @@ export function LandingSection() {
             ))}
           </div>
         </div>
+
+        {/* Mobile-only scroll hint — the absolute bottom hints below are md+ only */}
+        <button
+          onClick={() => scrollToSection("projects")}
+          className={`md:hidden mt-10 mx-auto flex flex-col items-center gap-2 bg-transparent border-none p-0 transition-opacity duration-800 ${
+            showElements.bio ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <span className="text-[10px] tracking-[0.18em] lowercase text-ink-muted">
+            projects
+          </span>
+          <div className="w-px h-9 bg-gradient-to-b from-ink-muted to-transparent animate-scroll-pulse" />
+        </button>
+
+        </div> {/* END scroll-fade wrapper */}
+
+        {/* Bleeds the panel background past the section edge so it fades into
+            the projects section instead of cutting off in a hard line */}
+        <div
+          aria-hidden
+          className="absolute top-full left-0 right-0 h-48 bg-gradient-to-b from-cream to-transparent pointer-events-none transition-colors duration-500"
+        />
       </div>
 
       {/* Full-width Grid Overlay Container holding both interactive scroll navigation hints */}

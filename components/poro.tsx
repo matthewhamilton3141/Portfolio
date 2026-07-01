@@ -16,7 +16,7 @@ const DEATH_OVERRIDE_DURATION = 4000
 
 
 type PoroAnim = "Poro_idle1.anm" | "HappyLick" | "Jump" | "Run2" | "Death" | "Eat" | "Float" | "Poro_idle2.anm" | "Poro_idle3.anm"
-type PoroOverride = "Eat" | "Death" | "HappyLick" | null
+type PoroOverride = "Poro_idle3.anm" | "Death" | "HappyLick" | null
 
 interface PoroModelProps {
   targetX: number
@@ -121,7 +121,7 @@ function PoroModel({ targetX, override, isPlaying, onPoroClick }: PoroModelProps
 }
 
 interface PoroProps {
-  containerRef: React.RefObject<HTMLDivElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
 }
 
 export function Poro({ containerRef }: PoroProps) {
@@ -158,11 +158,11 @@ export function Poro({ containerRef }: PoroProps) {
     const container = containerRef.current
     if (!container) return
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const chasePointer = (clientX: number, clientY: number) => {
       if (isReacting) return
       const rect = container.getBoundingClientRect()
-      const normalizedX = ((e.clientX - rect.left) / rect.width) * 2 - 1
-      const normalizedY = (e.clientY - rect.top) / rect.height // 0 = top, 1 = bottom
+      const normalizedX = ((clientX - rect.left) / rect.width) * 2 - 1
+      const normalizedY = (clientY - rect.top) / rect.height // 0 = top, 1 = bottom
 
       // Only chase cursor if in bottom 40% of the section
       if (normalizedY > 0.6) {
@@ -175,8 +175,18 @@ export function Poro({ containerRef }: PoroProps) {
       }
     }
 
+    const handleMouseMove = (e: MouseEvent) => chasePointer(e.clientX, e.clientY)
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0]
+      if (touch) chasePointer(touch.clientX, touch.clientY)
+    }
+
     container.addEventListener("mousemove", handleMouseMove)
-    return () => container.removeEventListener("mousemove", handleMouseMove)
+    container.addEventListener("touchmove", handleTouchMove, { passive: true })
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove)
+      container.removeEventListener("touchmove", handleTouchMove)
+    }
   }, [containerRef, isReacting])
 
   const handleMouseEnter = () => {

@@ -43,26 +43,28 @@ export function TopBar() {
       {/* NAVIGATION ITEMS LIST */}
       <div
         className={`
-          flex flex-col md:flex-row items-center gap-3 md:gap-2 pointer-events-auto
+          flex flex-row items-center gap-2 pointer-events-auto
           transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] origin-top
-          absolute md:relative top-[76px] md:top-0 left-5 md:left-auto md:right-0
-          bg-surface/95 backdrop-blur-md md:bg-transparent 
-          p-4 md:p-0 rounded-[20px] md:rounded-none border border-border md:border-none shadow-xl md:shadow-none
-          ${isOpen 
-            ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
+          absolute md:relative top-[76px] md:top-0 left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0
+          bg-surface/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none
+          p-2 md:p-0 rounded-full md:rounded-none border border-border md:border-none shadow-xl md:shadow-none
+          ${isOpen
+            ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-95 -translate-y-2 pointer-events-none md:opacity-100 md:scale-100 md:translate-y-0 md:pointer-events-auto"
           }
         `}
       >
         {/* Retermina */}
         <div className="flex items-center gap-2 relative z-[100000]">
-          <span className="text-[11px] font-semibold tracking-wide text-ink-muted flex items-center gap-1 select-none">
+          {/* Label crowds the horizontal mobile pill — desktop only */}
+          <span className="text-[11px] font-semibold tracking-wide text-ink-muted hidden md:flex items-center gap-1 select-none">
             try now <span className="animate-nudge-right">→</span>
           </span>
           <a
             href="https://retermina.com"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
             className="topbar-icon w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft no-underline transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none shrink-0"
             aria-label="Retermina"
             title="Retermina"
@@ -79,6 +81,7 @@ export function TopBar() {
           href="https://linkedin.com/in/matthewhamilton3141"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => setIsOpen(false)}
           className="topbar-icon relative z-[100000] w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft no-underline transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none shrink-0"
           aria-label="LinkedIn"
           title="LinkedIn"
@@ -94,6 +97,7 @@ export function TopBar() {
           href="https://github.com/matthewhamilton3141"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => setIsOpen(false)}
           className="topbar-icon relative z-[100000] w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft no-underline transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none shrink-0"
           aria-label="GitHub"
           title="GitHub"
@@ -108,6 +112,7 @@ export function TopBar() {
           href="https://instagram.com/mxtth2w"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => setIsOpen(false)}
           className="topbar-icon relative z-[100000] w-[38px] h-[38px] rounded-full border border-border bg-surface flex items-center justify-center text-ink-soft no-underline transition-all duration-250 hover:bg-accent/10 hover:border-accent hover:text-accent hover:scale-[1.08] select-none shrink-0"
           aria-label="Instagram"
           title="Instagram"

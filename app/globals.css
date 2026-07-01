@@ -143,6 +143,11 @@
   * {
     @apply border-border/40 outline-ring/50;
   }
+  /* Never allow horizontal panning on mobile — clip (not hidden) so vertical
+     overflow effects like the landing parallax keep painting normally. */
+  html {
+    overflow-x: clip;
+  }
   body {
     @apply bg-warm-white text-ink;
   }

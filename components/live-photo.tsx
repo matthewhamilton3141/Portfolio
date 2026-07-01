@@ -27,7 +27,7 @@ export function LivePhoto({
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovered, setIsHovered] = useState(false)
 
-  const handleMouseEnter = () => {
+  const activate = () => {
     setIsHovered(true)
     if (videoRef.current) {
       videoRef.current.play().catch((err) => {
@@ -38,7 +38,7 @@ export function LivePhoto({
     }
   }
 
-  const handleMouseLeave = () => {
+  const deactivate = () => {
     setIsHovered(false)
     if (videoRef.current) {
       videoRef.current.pause()
@@ -49,8 +49,16 @@ export function LivePhoto({
   return (
     <div
       className="relative w-full h-full cursor-pointer bg-neutral-200 block"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      // Mouse: play on hover. Touch: tap toggles play/pause (no hover on phones).
+      onPointerEnter={(e) => {
+        if (e.pointerType === "mouse") activate()
+      }}
+      onPointerLeave={(e) => {
+        if (e.pointerType === "mouse") deactivate()
+      }}
+      onPointerUp={(e) => {
+        if (e.pointerType !== "mouse") (isHovered ? deactivate : activate)()
+      }}
       style={{
         transform: isHovered
           ? `scale(${hoverScale}) translateY(-10px) translateZ(0)`

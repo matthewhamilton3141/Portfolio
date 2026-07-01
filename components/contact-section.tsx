@@ -90,7 +90,7 @@ export function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="min-h-screen scroll-snap-start relative bg-warm-white transition-colors duration-500 overflow-hidden"
+      className="min-h-dvh scroll-snap-start relative bg-warm-white transition-colors duration-500 overflow-hidden"
     >
       {/* Poro fills entire section, listens to mouse on the section itself.
           Mounted lazily once the section is visible so the 3D bundle never
@@ -101,7 +101,7 @@ export function ContactSection() {
 
       {/* Links float centered on top */}
       <div
-        className={`relative z-10 flex flex-col items-center justify-center min-h-screen px-6 pointer-events-none transition-all duration-1000 ${
+        className={`relative z-10 flex flex-col items-center justify-center min-h-dvh px-6 pointer-events-none transition-all duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >

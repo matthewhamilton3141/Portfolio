@@ -1,19 +1,3 @@
-/*{
-  type: "soon",
-  category: "project for JAMHacks 10",
-  title: "JAMHacks",
-  description: "coming soon...",
-  logoSrc: "/images/jamhackslogo.png",
-},*/
-
-/*{
-  type: "soon",
-  category: "hackathon project",
-  title: "Hack the 6ix",
-  description: "coming soon...",
-  logoSrc: "/images/ht6.png",
-},*/
-
 // components/projects-section.tsx
 "use client"
 
@@ -21,7 +5,23 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { LivePhoto } from "./live-photo"
 
-const projects = [
+interface Project {
+  type: "placeholder" | "soon" | "project" | "hackathon" | "live-photo"
+  category?: string
+  title: string
+  description: string
+  link?: string
+  liveUrl?: string
+  thumbnailSrc?: string
+  videoSrc?: string
+  webmVideoSrc?: string
+  logoSrc?: string
+  logoLink?: string
+  startTime?: number
+  objectPosition?: string
+}
+
+const projects: Project[] = [
     {
       type: "placeholder",
       category: "currently building",
@@ -69,7 +69,7 @@ const projects = [
 
 type ViewMode = "list" | "grid"
 
-function isLivePhotoProject(project: any) {
+function isLivePhotoProject(project: Project) {
   return project.type !== "soon" && project.type !== "placeholder"
 }
 
@@ -78,14 +78,17 @@ export function ProjectsSection() {
   const [hoveredListIndex, setHoveredListIndex] = useState<number | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
+  // Only track the cursor while a preview is actually showing — otherwise every
+  // mousemove over the list re-renders the whole section for nothing.
   const handleMouseMove = (e: React.MouseEvent) => {
+    if (hoveredListIndex === null) return
     setMousePos({ x: e.clientX, y: e.clientY })
   }
 
   return (
     <section
       id="projects"
-      className="min-h-screen w-full bg-background text-foreground transition-colors duration-500 flex flex-col justify-start items-center relative px-[8vw] md:px-[12vw] pt-20 pb-24 overflow-hidden"
+      className="min-h-dvh w-full bg-background text-foreground transition-colors duration-500 flex flex-col justify-start items-center relative px-[8vw] md:px-[12vw] pt-20 pb-24 overflow-hidden"
     >
       {/* Header with Integrated View Switcher */}
       <div className="w-full max-w-[1100px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8 z-50">
@@ -130,7 +133,10 @@ export function ProjectsSection() {
           {projects.map((project, idx) => (
             <div
               key={project.title}
-              onMouseEnter={() => setHoveredListIndex(idx)}
+              onMouseEnter={(e) => {
+                setHoveredListIndex(idx)
+                setMousePos({ x: e.clientX, y: e.clientY })
+              }}
               onMouseLeave={() => setHoveredListIndex(null)}
               className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-8 border-b border-border/40 group relative transition-colors duration-300 hover:bg-muted/10 px-4"
             >
@@ -189,7 +195,7 @@ export function ProjectsSection() {
   )
 }
 
-function GridCard({ project }: { project: any }) {
+function GridCard({ project }: { project: Project }) {
   return (
     <div className="bg-card rounded-xl border border-border/60 p-7 flex flex-col h-full">
       <div
@@ -205,17 +211,18 @@ function GridCard({ project }: { project: any }) {
 }
 
 /* Explicit asset router for the List View floating element */
-function FloatingHoverPreview({ project }: { project: any }) {
+function FloatingHoverPreview({ project }: { project: Project }) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const targetVideo = project.videoSrc || project.hoverVideoSrc
-  const targetWebm = project.webmVideoSrc || project.hoverWebmVideoSrc
+  const targetVideo = project.videoSrc
+  const targetWebm = project.webmVideoSrc
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video || project.startTime == null) return
+    const startTime = project.startTime
+    if (!video || startTime == null) return
 
     const seekToStart = () => {
-      video.currentTime = project.startTime
+      video.currentTime = startTime
     }
 
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
@@ -247,17 +254,18 @@ function FloatingHoverPreview({ project }: { project: any }) {
   return <ProjectThumbnail project={project} />
 }
 
-function ProjectThumbnail({ project }: { project: any }) {
+function ProjectThumbnail({ project }: { project: Project }) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!containerRef.current || project.startTime == null) return
+    const startTime = project.startTime
+    if (!containerRef.current || startTime == null) return
 
     const video = containerRef.current.querySelector("video")
     if (!video) return
 
     const seekToStart = () => {
-      video.currentTime = project.startTime
+      video.currentTime = startTime
     }
 
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
@@ -271,9 +279,11 @@ function ProjectThumbnail({ project }: { project: any }) {
   if (project.type === "soon") {
     return (
       <div className="w-full h-full rounded-xl bg-muted/40 border border-dashed border-border flex flex-col items-center justify-center p-6 select-none">
-        <div className="relative w-16 h-16 mb-3">
-          <Image src={project.logoSrc} alt="Logo" fill sizes="64px" className="object-contain dark:invert-[0.15] opacity-60 animate-pulse" />
-        </div>
+        {project.logoSrc && (
+          <div className="relative w-16 h-16 mb-3">
+            <Image src={project.logoSrc} alt="Logo" fill sizes="64px" className="object-contain dark:invert-[0.15] opacity-60 animate-pulse" />
+          </div>
+        )}
         <span className="text-[10px] tracking-[0.18em] uppercase text-muted-foreground font-semibold">Coming Soon</span>
       </div>
     )
@@ -316,7 +326,7 @@ function ProjectThumbnail({ project }: { project: any }) {
   )
 }
 
-function ProjectCardDetails({ project }: { project: any }) {
+function ProjectCardDetails({ project }: { project: Project }) {
   return (
     <div className="flex flex-col flex-grow">
       <p className="text-[9px] tracking-[0.18em] uppercase text-muted-foreground/80 font-bold mb-1.5">
