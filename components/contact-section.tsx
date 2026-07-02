@@ -9,8 +9,8 @@ const Poro = dynamic(() => import("./poro").then((m) => m.Poro), { ssr: false })
 
 const modernLinks = [
   { 
-    label: "resume (empty)", 
-    href: "https://www.linkedin.com/in/matthewhamilton3141/", 
+    label: "resume",
+    href: "/matthew_hamilton_resume_july26.pdf",
     external: true,
     icon: (
       <svg className="w-[17px] h-[17px] stroke-current fill-none" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
