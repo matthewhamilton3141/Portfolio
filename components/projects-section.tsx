@@ -23,8 +23,8 @@ interface Project {
 
 const projects: Project[] = [
     {
-      type: "placeholder",
-      category: "currently building",
+      type: "project",
+      category: "personal project",
       title: "Retermina",
       description: "A customizable terminal workspace built on Tauri v2 with a Rust backend driving native PTY shells — fully local, with no cloud, token limits, or subscription. Seven draggable panels (split terminals, syntax-highlighted code, explorer, live project-wide git diff, localhost tracker, native preview window, and an embedded Claude Code CLI with per-project token tracking) arrange freely on a react-grid-layout grid. Iris, a tokenless context-aware command bar, surfaces git/npm/shell macros gated on live repo state, while five structural theme engines and portable Loom presets re-skin the whole app instantly.",
       link: "https://github.com/matthewhamilton3141/Retermina",
@@ -33,7 +33,7 @@ const projects: Project[] = [
     },
     {
       type: "project",
-      category: "currently building",
+      category: "personal project",
       title: "Iris-NL",
       description: "Building an open-source TypeScript library that turns plain English into shell commands for terminal tools. Provider-agnostic backend (NVIDIA NIM / local Ollama / TensorRT-LLM) with a built-in safety layer and test suite. Designed to plug into my Retermina terminal app, with a benchmarking harness already in place to measure and optimize a local TensorRT-LLM model on consumer GPU hardware.",
       link: "https://github.com/matthewhamilton3141/iris-nl",
