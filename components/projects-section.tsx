@@ -23,6 +23,13 @@ interface Project {
 
 const projects: Project[] = [
     {
+      type: "soon",
+      category: "currently building",
+      title: "gsplat-rt",
+      description: "Building a real-time pipeline that converts a live video stream into 3D Gaussian Splats with a physics-ready collision mesh, exported as an OpenUSD stage for NVIDIA Isaac Sim and Omniverse. A multi-threaded, lock-free architecture runs TensorRT depth estimation (Depth Anything V2), TSDF geometry fusion, and an RGB-D SLAM front-end concurrently — benchmarked at 34.7 FPS on an NVIDIA A10G, clearing the 30 FPS real-time budget so an RL robot can see and physically interact with a scene as it's captured.",
+      link: "https://github.com/matthewhamilton3141/gsplat-rt",
+    },
+    {
       type: "project",
       category: "personal project",
       title: "Retermina",
@@ -278,11 +285,13 @@ function ProjectThumbnail({ project }: { project: Project }) {
 
   if (project.type === "soon") {
     return (
-      <div className="w-full h-full rounded-xl bg-muted/40 border border-dashed border-border flex flex-col items-center justify-center p-6 select-none">
-        {project.logoSrc && (
-          <div className="relative w-16 h-16 mb-3">
+      <div className="w-full h-full rounded-xl bg-muted/40 border border-dashed border-border flex flex-col items-center justify-center gap-3 p-6 select-none">
+        {project.logoSrc ? (
+          <div className="relative w-16 h-16">
             <Image src={project.logoSrc} alt="Logo" fill sizes="64px" className="object-contain dark:invert-[0.15] opacity-60 animate-pulse" />
           </div>
+        ) : (
+          <div className="w-8 h-8 rounded-full border-2 border-border border-t-foreground/70 animate-spin" />
         )}
         <span className="text-[10px] tracking-[0.18em] uppercase text-muted-foreground font-semibold">Coming Soon</span>
       </div>
