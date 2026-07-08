@@ -19,15 +19,19 @@ interface Project {
   logoLink?: string
   startTime?: number
   objectPosition?: string
+  /** Scales the thumbnail past its baked-in framing so it fills the frame. Default 1. */
+  zoom?: number
 }
 
 const projects: Project[] = [
     {
-      type: "soon",
+      type: "project",
       category: "currently building",
       title: "gsplat-rt",
       description: "Building a real-time pipeline that converts a live video stream into 3D Gaussian Splats with a physics-ready collision mesh, exported as an OpenUSD stage for NVIDIA Isaac Sim and Omniverse. A multi-threaded, lock-free architecture runs TensorRT depth estimation (Depth Anything V2), TSDF geometry fusion, and an RGB-D SLAM front-end concurrently — benchmarked at 34.7 FPS on an NVIDIA A10G, clearing the 30 FPS real-time budget so an RL robot can see and physically interact with a scene as it's captured.",
       link: "https://github.com/matthewhamilton3141/gsplat-rt",
+      thumbnailSrc: "/images/gsplat-rt-preview.png",
+      zoom: 1.3,
     },
     {
       type: "project",
@@ -37,6 +41,7 @@ const projects: Project[] = [
       link: "https://github.com/matthewhamilton3141/Retermina",
       liveUrl: "https://retermina.com/",
       thumbnailSrc: "/images/reterminapreview.png",
+      zoom: 1.3,
     },
     {
       type: "project",
@@ -98,7 +103,7 @@ export function ProjectsSection() {
       className="min-h-dvh w-full bg-background text-foreground transition-colors duration-500 flex flex-col justify-start items-center relative px-[8vw] md:px-[12vw] pt-20 pb-24 overflow-hidden"
     >
       {/* Header with Integrated View Switcher */}
-      <div className="w-full max-w-[1100px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8 z-50">
+      <div className="relative w-full max-w-[1100px] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8 z-50">
         <div>
           <h2 className="text-[13px] tracking-[0.25em] lowercase text-muted-foreground font-semibold">
             Projects
@@ -124,7 +129,7 @@ export function ProjectsSection() {
 
       {/* --- RENDER 2: GRID VIEW --- */}
       {viewMode === "grid" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch w-full max-w-[1100px] animate-fade-in">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch w-full max-w-[1100px] animate-fade-in">
           {projects.map((project) => (
             <GridCard key={project.title} project={project} />
           ))}
@@ -135,7 +140,7 @@ export function ProjectsSection() {
       {viewMode === "list" && (
         <div
           onMouseMove={handleMouseMove}
-          className="w-full max-w-[1100px] flex flex-col relative animate-fade-in border-t border-border/40"
+          className="relative z-10 w-full max-w-[1100px] flex flex-col animate-fade-in border-t border-border/40"
         >
           {projects.map((project, idx) => (
             <div
@@ -329,6 +334,7 @@ function ProjectThumbnail({ project }: { project: Project }) {
         videoSrc={project.videoSrc || ""}
         webmVideoSrc={project.webmVideoSrc || ""}
         objectPosition={project.objectPosition || "center"}
+        zoom={project.zoom}
         alt={project.title}
       />
     </div>

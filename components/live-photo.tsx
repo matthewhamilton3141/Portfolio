@@ -11,6 +11,8 @@ interface LivePhotoProps {
   hoverScale?: number
   /** CSS object-position for the video/image crop (e.g. "left", "center"). */
   objectPosition?: string
+  /** Scales the image/video past its baked-in framing so it fills the frame. Default 1. */
+  zoom?: number
   /** Set on above-the-fold instances to prioritise the LCP image. */
   priority?: boolean
 }
@@ -22,8 +24,11 @@ export function LivePhoto({
   alt,
   hoverScale = 1.2,
   objectPosition = "center",
+  zoom = 1,
   priority = false,
 }: LivePhotoProps) {
+  const zoomTransform = zoom !== 1 ? `scale(${zoom})` : undefined
+  const hasVideo = Boolean(videoSrc)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -76,29 +81,32 @@ export function LivePhoto({
         WebkitBackfaceVisibility: "hidden"
       }}
     >
-      {/* 1. Video Layer */}
-      <video
-        ref={videoRef}
-        loop
-        muted
-        playsInline
-        preload="auto"
-        crossOrigin="anonymous"
-        className="absolute inset-0 w-full h-full object-cover block"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          zIndex: isHovered ? 20 : 10,
-          objectPosition,
-          transition: "opacity 0.25s ease-in-out",
-          borderRadius: "inherit",
-          WebkitMaskImage: "-webkit-radial-gradient(white, black)"
-        }}
-      >
-        {webmVideoSrc && <source src={webmVideoSrc} type="video/webm" />}
-        <source src={videoSrc} type="video/mp4" />
-      </video>
+      {/* 1. Video Layer — only when a preview video exists */}
+      {hasVideo && (
+        <video
+          ref={videoRef}
+          loop
+          muted
+          playsInline
+          preload="auto"
+          crossOrigin="anonymous"
+          className="absolute inset-0 w-full h-full object-cover block"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            zIndex: isHovered ? 20 : 10,
+            objectPosition,
+            transform: zoomTransform,
+            transition: "opacity 0.25s ease-in-out",
+            borderRadius: "inherit",
+            WebkitMaskImage: "-webkit-radial-gradient(white, black)"
+          }}
+        >
+          {webmVideoSrc && <source src={webmVideoSrc} type="video/webm" />}
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      )}
 
-      {/* 2. Image Layer */}
+      {/* 2. Image Layer — stays visible on hover when there's no video */}
       <Image
         src={thumbnailSrc}
         alt={alt}
@@ -107,8 +115,9 @@ export function LivePhoto({
         priority={priority}
         className="object-cover block"
         style={{
-          opacity: isHovered ? 0 : 1,
+          opacity: isHovered && hasVideo ? 0 : 1,
           zIndex: isHovered ? 10 : 20,
+          transform: zoomTransform,
           transition: "opacity 0.25s ease-in-out",
           borderRadius: "inherit"
         }}
