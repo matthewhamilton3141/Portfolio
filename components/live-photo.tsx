@@ -7,6 +7,8 @@ interface LivePhotoProps {
   thumbnailSrc: string
   videoSrc: string
   webmVideoSrc?: string
+  /** Optional image swapped in on hover (in place of a preview video). */
+  hoverImageSrc?: string
   alt: string
   hoverScale?: number
   /** CSS object-position for the video/image crop (e.g. "left", "center"). */
@@ -21,6 +23,7 @@ export function LivePhoto({
   thumbnailSrc,
   videoSrc,
   webmVideoSrc,
+  hoverImageSrc,
   alt,
   hoverScale = 1.2,
   objectPosition = "center",
@@ -29,6 +32,7 @@ export function LivePhoto({
 }: LivePhotoProps) {
   const zoomTransform = zoom !== 1 ? `scale(${zoom})` : undefined
   const hasVideo = Boolean(videoSrc)
+  const hasHoverImage = Boolean(hoverImageSrc)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovered, setIsHovered] = useState(false)
 
@@ -106,7 +110,25 @@ export function LivePhoto({
         </video>
       )}
 
-      {/* 2. Image Layer — stays visible on hover when there's no video */}
+      {/* 2. Hover Image Layer — swapped in on hover when there's no video */}
+      {hasHoverImage && (
+        <Image
+          src={hoverImageSrc!}
+          alt={alt}
+          fill
+          sizes="(max-width: 768px) 200px, 240px"
+          className="absolute inset-0 object-cover block"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            zIndex: isHovered ? 20 : 10,
+            transform: zoomTransform,
+            transition: "opacity 0.25s ease-in-out",
+            borderRadius: "inherit"
+          }}
+        />
+      )}
+
+      {/* 3. Image Layer — stays visible on hover when there's no video/hover image */}
       <Image
         src={thumbnailSrc}
         alt={alt}
@@ -115,7 +137,7 @@ export function LivePhoto({
         priority={priority}
         className="object-cover block"
         style={{
-          opacity: isHovered && hasVideo ? 0 : 1,
+          opacity: isHovered && (hasVideo || hasHoverImage) ? 0 : 1,
           zIndex: isHovered ? 10 : 20,
           transform: zoomTransform,
           transition: "opacity 0.25s ease-in-out",

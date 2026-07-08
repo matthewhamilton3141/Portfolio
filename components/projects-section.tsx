@@ -13,6 +13,7 @@ interface Project {
   link?: string
   liveUrl?: string
   thumbnailSrc?: string
+  hoverImageSrc?: string
   videoSrc?: string
   webmVideoSrc?: string
   logoSrc?: string
@@ -31,6 +32,7 @@ const projects: Project[] = [
       description: "Building a real-time pipeline that converts a live video stream into 3D Gaussian Splats with a physics-ready collision mesh, exported as an OpenUSD stage for NVIDIA Isaac Sim and Omniverse. A multi-threaded, lock-free architecture runs TensorRT depth estimation (Depth Anything V2), TSDF geometry fusion, and an RGB-D SLAM front-end concurrently — benchmarked at 34.7 FPS on an NVIDIA A10G, clearing the 30 FPS real-time budget so an RL robot can see and physically interact with a scene as it's captured.",
       link: "https://github.com/matthewhamilton3141/gsplat-rt",
       thumbnailSrc: "/images/viewer_splats.png",
+      hoverImageSrc: "/images/viewer_points.png",
       zoom: 1.2,
     },
     {
@@ -333,6 +335,7 @@ function ProjectThumbnail({ project }: { project: Project }) {
         thumbnailSrc={project.thumbnailSrc || ""}
         videoSrc={project.videoSrc || ""}
         webmVideoSrc={project.webmVideoSrc || ""}
+        hoverImageSrc={project.hoverImageSrc}
         objectPosition={project.objectPosition || "center"}
         zoom={project.zoom}
         alt={project.title}
