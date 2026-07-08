@@ -55,7 +55,7 @@ const projects: Project[] = [
     },
     {
     type: "hackathon",
-    category: "full-stack dev & blockchain",
+    category: "hackathon project",
     title: "baam",
     description: "BAAM goes where you go, a social betting platform for your personal circle linking Solana smart contracts, MongoDB Atlas for data management, and Vultr for backend infrastructure to provide a native iMessage plugin, Discord bot, and a centralized web app.",
     link: "https://github.com/BansonVuong/BAAM",
@@ -68,7 +68,7 @@ const projects: Project[] = [
   },
   {
     type: "live-photo",
-    category: "systems & front-end engineering",
+    category: "personal projects",
     title: "portfolio",
     description: "Utilizes React and TypeScript to create a complex, stacked event architecture to create a high-fidelity UI. Leverages Cloudflare R2 Object Storage for efficient asset delivery and is deployed through Vercel to ensure rapid, globally distributed performance. Real-time state management, cloud infrastructure integration for a smooth, responsive user experience.",
     link: "https://github.com/matthewhamilton3141/portfolio",
