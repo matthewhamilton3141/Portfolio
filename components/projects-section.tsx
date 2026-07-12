@@ -31,8 +31,8 @@ const projects: Project[] = [
       title: "gsplat-rt",
       description: "Building a real-time pipeline that converts a live video stream into 3D Gaussian Splats with a physics-ready collision mesh, exported as an OpenUSD stage for NVIDIA Isaac Sim and Omniverse. A multi-threaded, lock-free architecture runs TensorRT depth estimation (Depth Anything V2), TSDF geometry fusion, and an RGB-D SLAM front-end concurrently — benchmarked at 34.7 FPS on an NVIDIA A10G, clearing the 30 FPS real-time budget so an RL robot can see and physically interact with a scene as it's captured.",
       link: "https://github.com/matthewhamilton3141/gsplat-rt",
-      thumbnailSrc: "/images/viewer_splats.png",
-      hoverImageSrc: "/images/viewer_points.png",
+      thumbnailSrc: "/images/reconstruction_desk.png",
+      videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/reconstruction_turntable.mp4",
       zoom: 1.2,
     },
     {
