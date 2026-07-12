@@ -43,7 +43,8 @@ const projects: Project[] = [
       link: "https://github.com/matthewhamilton3141/Retermina",
       liveUrl: "https://retermina.com/",
       thumbnailSrc: "/images/reterminapreview.png",
-      zoom: 1.3,
+      videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/Retermina%20Promo%20(2).mp4",
+      zoom: 1.0,
     },
     {
       type: "project",
@@ -193,7 +194,7 @@ export function ProjectsSection() {
           {/* Floating Live-Hover Preview Window */}
           {hoveredListIndex !== null && projects[hoveredListIndex].type !== "placeholder" && (
             <div
-              className="fixed pointer-events-none hidden lg:block z-50 w-[360px] aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xl bg-zinc-950 animate-fade-in"
+              className="fixed pointer-events-none hidden lg:block z-50 w-[360px] aspect-video rounded-xl overflow-hidden border border-border shadow-2xl bg-zinc-950 animate-fade-in"
               style={{
                 left: `${mousePos.x + 20}px`,
                 top: `${mousePos.y - 120}px`,
@@ -213,7 +214,7 @@ function GridCard({ project }: { project: Project }) {
   return (
     <div className="bg-card rounded-xl border border-border/60 p-7 flex flex-col h-full">
       <div
-        className={`w-full aspect-[4/3] relative mb-6 rounded-xl ${
+        className={`w-full aspect-video relative mb-6 rounded-xl ${
           isLivePhotoProject(project) ? "overflow-visible" : "overflow-hidden"
         }`}
       >
@@ -338,6 +339,7 @@ function ProjectThumbnail({ project }: { project: Project }) {
         hoverImageSrc={project.hoverImageSrc}
         objectPosition={project.objectPosition || "center"}
         zoom={project.zoom}
+        hoverScale={1.4}
         alt={project.title}
       />
     </div>
