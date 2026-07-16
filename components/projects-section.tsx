@@ -29,7 +29,7 @@ const projects: Project[] = [
       type: "project",
       category: "currently building",
       title: "gsplat-rt",
-      description: "Building a real-time pipeline that converts a live video stream into 3D Gaussian Splats with a physics-ready collision mesh, exported as an OpenUSD stage for NVIDIA Isaac Sim and Omniverse. A multi-threaded, lock-free architecture runs TensorRT depth estimation (Depth Anything V2), TSDF geometry fusion, and an RGB-D SLAM front-end concurrently — benchmarked at 34.7 FPS on an NVIDIA A10G, clearing the 30 FPS real-time budget so an RL robot can see and physically interact with a scene as it's captured.",
+      description: "Real-time pipeline converting a live video stream into 3D Gaussian Splats plus a physics-ready collision mesh, exported as an OpenUSD stage for Isaac Sim / Omniverse. A multi-threaded, queue-decoupled architecture runs a strongly-typed FP16 TensorRT depth engine (Depth Anything V2, 2.24×), a custom CUDA TSDF fusion kernel (175× over numpy, bit-for-bit verified), and a learned SuperPoint + LightGlue SLAM front-end (3.5 cm ATE). Benchmarked at 82.7 FPS on an A10G — 2.75× the 30 FPS real-time budget — so an RL robot can see and physically interact with a scene as it's captured.",
       link: "https://github.com/matthewhamilton3141/gsplat-rt",
       thumbnailSrc: "/images/reconstruction_desk.png",
       videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/reconstruction_turntable.mp4",
@@ -45,6 +45,16 @@ const projects: Project[] = [
       thumbnailSrc: "/images/reterminapreview.png",
       videoSrc: "https://pub-642075d77d2b430c93bf3b1c60299af0.r2.dev/Retermina%20Promo%20(2).mp4",
       zoom: 1.0,
+    },
+    {
+      type: "project",
+      category: "personal project",
+      title: "Sketchstack",
+      description: "Sketchstack is a full-stack web app that turns visual system-design diagrams into structured prompts for AI coding agents like Claude Code and Cursor. Built with Next.js, TypeScript, and React Flow, with Supabase (Postgres, GitHub OAuth, row-level security) powering authentication, cloud save, and shareable links.",
+      link: "https://github.com/matthewhamilton3141/sketchstack",
+      liveUrl: "https://sketchstack.vercel.app",
+      thumbnailSrc: "/images/sketchstack.png",
+      hoverImageSrc: "/images/sketchstack.png"
     },
     {
       type: "project",

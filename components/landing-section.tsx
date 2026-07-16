@@ -280,7 +280,7 @@ export function LandingSection() {
             </a>
           </p>
           <p className="text-[15px] leading-[1.8] text-ink-soft mb-5">
-            {"originally from toronto, now based in waterloo for fall '26 to winter '27. i enjoy exploring nature, video games, and trying new things."}
+            {"from toronto, based in waterloo for fall '26 and winter '27. i enjoy exploring nature, video games, and trying new things."}
           </p>
           <div className="flex flex-wrap gap-2 mt-5">
             {["TypeScript", "Python", "React", "Next.js", "Tauri"].map((tag) => (
