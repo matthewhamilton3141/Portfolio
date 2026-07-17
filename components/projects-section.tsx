@@ -92,14 +92,14 @@ const projects: Project[] = [
 
 ]
 
-type ViewMode = "list" | "grid"
+type ViewMode = "grid" | "list"
 
 function isLivePhotoProject(project: Project) {
   return project.type !== "soon" && project.type !== "placeholder"
 }
 
 export function ProjectsSection() {
-  const [viewMode, setViewMode] = useState<ViewMode>("list")
+  const [viewMode, setViewMode] = useState<ViewMode>("grid")
   const [hoveredListIndex, setHoveredListIndex] = useState<number | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
@@ -124,7 +124,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="flex bg-muted/40 p-1 rounded-full border border-border/40 backdrop-blur-sm self-stretch sm:self-auto justify-between">
-          {(["list", "grid"] as ViewMode[]).map((mode) => (
+          {(["grid", "list"] as ViewMode[]).map((mode) => (
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
