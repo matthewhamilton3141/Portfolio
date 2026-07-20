@@ -14,6 +14,23 @@ const RUN_ANIM_THRESHOLD = 0.02
 const IDLE3_OVERRIDE_DURATION = 2500
 const DEATH_OVERRIDE_DURATION = 4000
 
+// The Poro is a WebGL scene. On browsers where WebGL is unavailable (hardware
+// acceleration disabled, GPU blocklisted, headless), <Canvas> throws an
+// uncaught "Error creating WebGL context" that can tear down surrounding UI.
+// Probe support first so we can skip rendering the Canvas entirely instead.
+function isWebGLAvailable(): boolean {
+  if (typeof window === "undefined") return false
+  try {
+    const canvas = document.createElement("canvas")
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    )
+  } catch {
+    return false
+  }
+}
+
 
 type PoroAnim = "Poro_idle1.anm" | "HappyLick" | "Jump" | "Run2" | "Death" | "Eat" | "Float" | "Poro_idle2.anm" | "Poro_idle3.anm"
 type PoroOverride = "Poro_idle3.anm" | "Death" | "HappyLick" | null
@@ -139,6 +156,10 @@ export function Poro({ containerRef }: PoroProps) {
   // Toggles which animation plays on the next click
   const nextClickAnim = useRef<"Poro_idle3.anm" | "Death">("Poro_idle3.anm")
 
+  // Client-only (this component is dynamically imported with ssr: false), so the
+  // probe runs safely in a lazy initializer.
+  const [webglOk] = useState(isWebGLAvailable)
+
   useEffect(() => {
     const handler = (e: CustomEvent) => setIsPlaying(e.detail.isPlaying)
     window.addEventListener("poroPlayState", handler as EventListener)
@@ -225,6 +246,10 @@ export function Poro({ containerRef }: PoroProps) {
       setOverride(null)
     }, duration)
   }
+
+  // No WebGL → don't mount <Canvas> (it would throw and can crash nearby UI).
+  // Render nothing rather than a broken/blank canvas.
+  if (!webglOk) return null
 
   return (
     <div
