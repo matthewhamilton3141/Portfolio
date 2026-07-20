@@ -19,6 +19,7 @@ const LANDING_LOGOS = [
   "/images/retermina.png",
   "/images/claude.png",
   "/images/hk.png",
+  "/images/sketchstacklogo.png"
 ]
 
 export function LandingSection() {
